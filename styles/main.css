@@ -1,0 +1,249 @@
+.border-radius {
+    border-radius: 15px !important;
+}
+.btn {
+    height: 45px !important;
+    padding-left: 15px;
+    padding-right: 15px;
+    min-width: 100px;
+}
+.btn-orange-outline {
+    border-color: #FF9015 !important;
+    background-color: transparent  !important;
+    margin: 0px 5px;
+}
+
+.btn-orange {
+    border-color: #FF9015 !important;
+    background-color: #FF9015 !important;
+    margin: 0px 5px;
+}
+.btn-orange-outline:hover {
+    border-color: #FF9015 !important;
+    background-color: #ff92151b !important;
+    margin: 0px 5px;
+}
+.btn-orange:hover {
+    border-color: #ffaf54 !important;
+    background-color: #ffaf54 !important;
+    margin: 0px 5px;
+}
+
+.input-height {
+    height: 45px !important;
+ 
+}
+
+.card-transparent {
+    max-width: 450px;
+    width: 100%;
+    
+    padding: 35px;
+    margin: auto;
+}
+.box-shadow {
+    -webkit-box-shadow: 0 0 10px rgb(129, 129, 129);
+    box-shadow: 0 0 10px rgb(129, 129, 129);
+}
+
+.avatar-team {
+    width: 200px;
+    height: 200px;
+    border-radius: 100%;
+}
+
+/* square buttons */
+.rec.rec-arrow {
+    border-radius: 50%;
+    color: white !important;
+}
+
+/* round buttons on hover */
+.rec.rec-arrow:hover {
+    border-radius: 50%;
+    color: white !important;
+    background-color: #ff9015 !important;
+}
+
+/* hide disabled buttons */
+.rec.rec-arrow:disabled {
+    visibility: hidden;
+}
+
+.main {
+    min-height: 70hv !important;
+}
+
+/* disable default outline on focused items */
+/* add custom outline on focused items */
+.rec-carousel-item:focus {
+    outline: none !important;
+    box-shadow: inset 0 0 1px 1px lightgrey !important;
+    background-color: #ff9015 !important;
+}
+
+.eaptOe {
+    width: 60px !important;
+    border-radius: 15px !important;
+    border: 1px solid #ff9015 !important;
+    box-shadow: 0 0 1px 3px #ff921580 !important;
+}
+
+.rec-dot_active {
+    width: 80px !important;
+    border-radius: 15px !important;
+    background-color: #ff9015 !important;
+    border: 1px solid #ff9015 !important;
+    box-shadow: 0 0 1px 3px #f5ad5b !important;
+}
+
+.modal-background {
+    position: fixed;
+    backdrop-filter: blur(10px);
+    background-color: rgba(0, 0, 0, 0.555);
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    text-align: left !important;
+    color: rgb(26, 26, 26);
+}
+
+.radio-input {
+    margin-top: 25px;
+    margin-left: 15px;
+}
+
+.form-check {
+    height: 90px;
+}
+
+.radio-label {
+    cursor: pointer;
+    border: 1px solid #41414186;
+    background-color: #41414125;
+    position: absolute;
+    left: 0;
+    right: 0;
+    padding: 10px 40px;
+    border-radius: 15px;
+    font-weight: 400;
+    font-size: 14px !important;
+}
+
+.flag-dropdown {
+    border: none !important;
+    background-color: transparent !important;
+}
+
+.react-tel-input .selected-flag {
+    border: 2px solid #148a2946 !important;
+    border-bottom-left-radius: 1rem !important;
+    padding-right: 34px !important;
+    border-top-left-radius: 1rem !important;
+}
+
+.form-control {
+    border: 2px solid #002b4846 !important;
+    width: 100% !important;
+    border-radius: 1rem !important;
+    height: 3rem !important;
+
+    margin-top: 0.5rem !important;
+}
+
+/* .form-control:focus {
+    border: 3px solid #002b4878 !important;
+    background-color: #41414125 !important;
+    outline: none !important;
+} */
+
+/* .input {
+    border: #f5ad5b !important;
+    background-color: #41414125;
+} */
+
+
+
+label {
+    font-weight: bold;
+}
+
+/* .input {
+    border: 2px solid #002b4846 !important;
+    background-color: #b9b9b925;
+    padding: 10px;
+    font-weight: bold;
+} */
+
+/* .input:focus {
+    border: 2px solid #002b4878 !important;
+    background-color: #41414125;
+    outline: none;
+} */
+
+
+.lds-ring {
+    display: inline-block;
+    position: relative;
+    width: 80px;
+    height: 80px;
+}
+
+.lds-ring div {
+    box-sizing: border-box;
+    display: block;
+    position: absolute;
+    width: 64px;
+    height: 64px;
+    margin: 8px;
+    border: 8px solid #fff;
+    border-radius: 50%;
+    animation: lds-ring 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+    border-color: #fff transparent transparent transparent;
+}
+
+.lds-ring div:nth-child(1) {
+    animation-delay: -0.45s;
+}
+
+.lds-ring div:nth-child(2) {
+    animation-delay: -0.3s;
+}
+
+.lds-ring div:nth-child(3) {
+    animation-delay: -0.15s;
+}
+
+
+.load-wraper {
+    position: relative;
+    height: 100%;
+    width: 100%;
+    background-color: rgb(211, 211, 211);
+    z-index: 44;
+    overflow: hidden;
+    border-radius: 5px;
+}
+
+.activity {
+    position: absolute;
+    left: -45%;
+    height: 100%;
+    width: 45%;
+    background-image: linear-gradient(to left, rgba(251, 251, 251, .05), rgba(251, 251, 251, .3), rgba(251, 251, 251, .6), rgba(251, 251, 251, .3), rgba(251, 251, 251, .05));
+    background-image: -moz-linear-gradient(to left, rgba(251, 251, 251, .05), rgba(251, 251, 251, .3), rgba(251, 251, 251, .6), rgba(251, 251, 251, .3), rgba(251, 251, 251, .05));
+    background-image: -webkit-linear-gradient(to left, rgba(251, 251, 251, .05), rgba(251, 251, 251, .3), rgba(251, 251, 251, .6), rgba(251, 251, 251, .3), rgba(251, 251, 251, .05));
+    animation: loading 1s infinite;
+    z-index: 45;
+}
+
+@keyframes loading {
+    0% {
+        left: -45%;
+    }
+
+    100% {
+        left: 100%;
+    }
+}
