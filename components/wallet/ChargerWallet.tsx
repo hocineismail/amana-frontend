@@ -81,10 +81,20 @@ export default function ChargerWallet({ amountBlocked }: Props) {
     swalWithBootstrapButtons
       .fire({
         title: "Are you sure?",
-        text: `You have made a payment with   ${item.request.amount}!`,
+        text: `${
+          item.request.method !== "By Office"
+            ? `Have you made a transfer of  ${getCurrentcyFormat({
+                currency: "EUR",
+                amount: item.request.amount,
+              })} from your bank account?!`
+            : `Have you made a cash deposit of  ${getCurrentcyFormat({
+                currency: "EUR",
+                amount: item.request.amount,
+              })} in our office?`
+        }`,
         icon: "warning",
         showCancelButton: true,
-        confirmButtonText: "Yes, I made it!",
+        confirmButtonText: "Yes, I’ve made it!",
         cancelButtonText: "No, not yet!",
         reverseButtons: true,
       })
@@ -97,7 +107,7 @@ export default function ChargerWallet({ amountBlocked }: Props) {
           setloadingOperation(false);
           swalWithBootstrapButtons.fire(
             "Confirmed!",
-            "We will check your payement and we will charge your wallet",
+            "We’ll add your deposit to your wallet after processing it! ",
             "success"
           );
         } else if (
@@ -106,9 +116,16 @@ export default function ChargerWallet({ amountBlocked }: Props) {
         ) {
           swalWithBootstrapButtons.fire(
             "Cancelled",
-            "Please Made your payement before today :)",
+            `${
+              item.request.method !== "By Office"
+                ? `Please make the transfer from your bank account & then confirm this deposit!`
+                : `Please make the cash deposit in our office and then confirm this deposit request!`
+            }`,
             "error"
           );
+          setloadingOperation(false);
+        } else if (!result.isConfirmed) {
+          setloadingOperation(false);
         }
       });
   };
@@ -118,7 +135,7 @@ export default function ChargerWallet({ amountBlocked }: Props) {
     swalWithBootstrapButtons
       .fire({
         title: "Are you sure?",
-        text: `If You Cancel your request, you can t charge your wallet   ${getCurrentcyFormat(
+        text: `If You cancel your request, you can't charge your wallet with  ${getCurrentcyFormat(
           { currency: "EUR", amount: item.request.amount }
         )}`,
         icon: "warning",
@@ -149,7 +166,13 @@ export default function ChargerWallet({ amountBlocked }: Props) {
           result.dismiss === Swal.DismissReason.cancel
         ) {
           setloadingOperation(false);
-          swalWithBootstrapButtons.fire("Cancelled", "we keep it :)", "error");
+          swalWithBootstrapButtons.fire(
+            "Cancelled",
+            `"We will keep your deposit request  :)`,
+            "error"
+          );
+        } else if (!result.isConfirmed) {
+          setloadingOperation(false);
         }
       });
   };

@@ -85,14 +85,22 @@ export default function AllTransactions({ amountBlocked }: Props) {
   }, [currentUser]);
 
   const onConfirmCharge = (item: any) => {
+    console.log(item);
     setloadingOperation(true);
     swalWithBootstrapButtons
       .fire({
         title: "Are you sure?",
-        text: `Have you made a transfer of  ${getCurrentcyFormat({
-          currency: "EUR",
-          amount: item.request.amount,
-        })} from your bank account?!`,
+        text: `${
+          item.request.method !== "By Office"
+            ? `Have you made a transfer of  ${getCurrentcyFormat({
+                currency: "EUR",
+                amount: item.request.amount,
+              })} from your bank account?!`
+            : `Have you made a cash deposit of  ${getCurrentcyFormat({
+                currency: "EUR",
+                amount: item.request.amount,
+              })} in our office?`
+        }`,
         icon: "warning",
         showCancelButton: true,
         confirmButtonText: "Yes, I’ve made it!",
@@ -118,7 +126,11 @@ export default function AllTransactions({ amountBlocked }: Props) {
           setloadingOperation(false);
           swalWithBootstrapButtons.fire(
             "Cancelled",
-            "Please make the transfer from your bank account & then confirm this deposit!",
+            `${
+              item.request.method !== "By Office"
+                ? `Please make the transfer from your bank account & then confirm this deposit!`
+                : `Please make the cash deposit in our office and then confirm this deposit request!`
+            }`,
             "error"
           );
         } else if (!result.isConfirmed) {
@@ -134,7 +146,7 @@ export default function AllTransactions({ amountBlocked }: Props) {
       swalWithBootstrapButtons
         .fire({
           title: "Are you sure?",
-          text: `If You Cancel your request, you can t charge your wallet   ${getCurrentcyFormat(
+          text: `If You cancel your request, you can't charge your wallet with  ${getCurrentcyFormat(
             { currency: "EUR", amount: item.request.amount }
           )}`,
           icon: "warning",
@@ -163,7 +175,7 @@ export default function AllTransactions({ amountBlocked }: Props) {
             setloadingOperation(false);
             swalWithBootstrapButtons.fire(
               "Cancelled",
-              "we keep it :)",
+              `"We will keep your deposit request  :)`,
               "error"
             );
           } else if (!result.isConfirmed) {
@@ -206,7 +218,7 @@ export default function AllTransactions({ amountBlocked }: Props) {
             setloadingOperation(false);
             swalWithBootstrapButtons.fire(
               "Cancelled",
-              "we keep it :)",
+              "We will keep your transfer request :)",
               "error"
             );
           } else if (!result.isConfirmed) {

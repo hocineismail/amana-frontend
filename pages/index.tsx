@@ -18,7 +18,11 @@ function Index() {
     }, 1000);
   }, []);
   if (verified === undefined)
-    return <div className="loading">Loading&#8230;</div>;
+    return (
+      <div className="loading" style={{ textAlign: "center" }}>
+        Loading&#8230;
+      </div>
+    );
   if (verified === true) return <Dashboard />;
   return <Home />;
 }

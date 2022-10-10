@@ -37,7 +37,7 @@ export default function useGeneratorRef() {
   const getNewRef = async () => {
     // i should get the current ref name\
     // get last ref from request
-    
+    console.log(banks)
     let arrayRef = banks[0] ?.bank.ref.split("-");
      
     // if exist will ad number
@@ -46,7 +46,7 @@ export default function useGeneratorRef() {
      * get last reference from last request
      */
     const requestRef = collection(db, "requests");
-    const q = query(requestRef, orderBy("createdAt", "desc"), where("referenceName", "==", arrayRef[0]), limit(1)); 
+    const q = query(requestRef, orderBy("createdAt", "desc"), where("ref", "==", arrayRef[0]), limit(1)); 
     const querySnapshot = await getDocs(q);
 
     if (querySnapshot.docs.length !== 0) {

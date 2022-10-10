@@ -19,7 +19,7 @@ import {
   MIN_AMOUNT_CHARGE_CASH,
 } from "../../constants/constants";
 
-import { globalState, onBlockFetchFees } from "../../features/globalSlice";
+import { globalState } from "../../features/globalSlice";
 import { userState } from "../../features/userSlice";
 import { db } from "../../firebase/firebase";
 import { isValidAmount } from "../../helpers/validationAmount";
@@ -593,7 +593,7 @@ export default function Charge({ onCloseModel }: Props) {
                                 borderTopRightRadius: "10px",
                               }}
                             >
-                              Copy All information:
+                              Copy All:
                               <span
                                 className="tooltip-copy"
                                 onClick={() => {
@@ -755,7 +755,7 @@ export default function Charge({ onCloseModel }: Props) {
                                 borderBottomRightRadius: "10px",
                               }}
                             >
-                              Payment Reference: {refName + "-" + reference}
+                              Transfer Reference: {refName + "-" + reference}
                               <span
                                 className="tooltip-copy"
                                 onClick={() => {
@@ -807,6 +807,7 @@ export default function Charge({ onCloseModel }: Props) {
                     }}
                     disabled={
                       (checked === 1 && countries.length == 0) ||
+                      (checked === 1 && banks.length == 0) ||
                       (checked === 2 && EUOffices.length == 0) ||
                       error.error ||
                       init
