@@ -92,7 +92,7 @@ export default function Exchange() {
           <p className="mb-3 font-sans  font-medium text-white dark:text-gray-400">
             Fees = €0,00
             <br />
-            {exchange?.amount === 1
+            {!exchange
               ? "Loading..."
               : `  Ex-change rate today X € 1 = ${getCurrentcyFormat({
                   currency: "DZD",
