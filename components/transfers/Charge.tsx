@@ -138,7 +138,7 @@ export default function Charge({ onCloseModel }: Props) {
             bic_swift: banks[0]?.bank.bic_swift,
           },
           exchange_fees: 0,
-          description: `Deposit to wallet  €${Exchange.moneyEuro}`,
+          description: `Deposit to wallet  €${Exchange.moneyEuro} - Bank Transfer`,
           status: "Awaiting",
           amount: Exchange.moneyEuro,
           referenceName: arrayRef[0],
@@ -175,7 +175,7 @@ export default function Charge({ onCloseModel }: Props) {
             address: office ? office.address : EUOffices[0]?.offices.address,
           },
           exchange_fees: 0,
-          description: `Deposit to wallet  €${Exchange.moneyEuro}`,
+          description: `Deposit to wallet  €${Exchange.moneyEuro} - Cash`,
           status: "Awaiting",
           amount: Exchange.moneyEuro,
           current_country: office
@@ -221,7 +221,7 @@ export default function Charge({ onCloseModel }: Props) {
             address: office ? office.address : EUOffices[0]?.offices.address,
           },
           exchange_fees: 0,
-          description: `Deposit to wallet  €${Exchange.moneyEuro}`,
+          description: `Deposit to wallet  €${Exchange.moneyEuro} - Cash`,
           status: "Awaiting",
           amount: Exchange.moneyEuro,
           current_country: office

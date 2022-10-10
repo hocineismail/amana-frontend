@@ -85,7 +85,6 @@ export default function AllTransactions({ amountBlocked }: Props) {
   }, [currentUser]);
 
   const onConfirmCharge = (item: any) => {
-    console.log(item);
     setloadingOperation(true);
     swalWithBootstrapButtons
       .fire({
@@ -175,7 +174,7 @@ export default function AllTransactions({ amountBlocked }: Props) {
             setloadingOperation(false);
             swalWithBootstrapButtons.fire(
               "Cancelled",
-              `"We will keep your deposit request  :)`,
+              `We will keep your deposit request  :)`,
               "error"
             );
           } else if (!result.isConfirmed) {
@@ -406,7 +405,7 @@ export default function AllTransactions({ amountBlocked }: Props) {
                     }}
                   >
                     <div style={{ minWidth: "200px" }}>
-                      {item.request.description}{" "}
+                      {item.request.description}
                     </div>
                   </td>
                   <td

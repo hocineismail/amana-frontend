@@ -168,7 +168,7 @@ export default function ChargerWallet({ amountBlocked }: Props) {
           setloadingOperation(false);
           swalWithBootstrapButtons.fire(
             "Cancelled",
-            `"We will keep your deposit request  :)`,
+            `We will keep your deposit request  :)`,
             "error"
           );
         } else if (!result.isConfirmed) {
@@ -223,8 +223,8 @@ export default function ChargerWallet({ amountBlocked }: Props) {
           <thead
             className="text-gray-600 text-xs font-semibold   
            text-left px-5 py-3 
-          bg-gray-100  
-          uppercase  "
+           bg-gray-100  
+           uppercase  "
             style={{
               textAlign: "left",
               margin: "10px",
@@ -356,7 +356,7 @@ export default function ChargerWallet({ amountBlocked }: Props) {
                     }}
                   >
                     <div style={{ minWidth: "200px" }}>
-                      {item.request.description}{" "}
+                      {item.request.description}
                     </div>
                   </td>
                   <td
