@@ -114,7 +114,7 @@ export default function Login() {
           );
         })
         .catch((e) => {
-          setErrors("this Account is not exist");
+          setErrors("This email doesn't exist");
         });
     },
   });

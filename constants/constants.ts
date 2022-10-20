@@ -7,10 +7,10 @@ export const FROM_OFFICE = "By Office"
 export const DELIVERY = "Delivery to home"
 export const AMOUNT_SELECTED = 2000
 
-export const MIN_AMOUNT_CHARGE_BANK = 2000
-export const MAX_AMOUNT_CHARGE_BANK = 5
-export const MIN_AMOUNT_CHARGE_CASH = 50000
-export const MAX_AMOUNT_CHARGE_CASH = 500
+export const MIN_AMOUNT_CHARGE_BANK = 5 
+export const MAX_AMOUNT_CHARGE_BANK = 2000
+export const MIN_AMOUNT_CHARGE_CASH = 500
+export const MAX_AMOUNT_CHARGE_CASH = 50000 
 
 export const MIN_AMOUNT_CCP_DZ = 1000
 export const MAX_AMOUNT_CCP_DZ = 1000

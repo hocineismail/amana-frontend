@@ -229,13 +229,6 @@ export default function index() {
               we will do our best efforts to promptly remove such information
               from our records.
             </p>
-            <hr />
-            <p>
-              Generated using{" "}
-              <a href="https://www.privacypolicygenerator.info">
-                Privacy Policy Generator
-              </a>
-            </p>
           </div>
         </Container>
       </Layout>

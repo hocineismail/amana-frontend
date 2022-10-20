@@ -78,7 +78,7 @@ export default function Charge({ onCloseModel }: Props) {
   const [office, setoffice] = React.useState<any>();
   const [steps, setsteps] = React.useState<Number>(1);
   const [Exchange, setExchange] = React.useState<IMoney>({
-    moneyEuro: 1,
+    moneyEuro: 0,
     moneyDinar: 0,
   });
   const {

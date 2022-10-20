@@ -12,20 +12,26 @@ interface IValidationAmount {
 export function isValidAmount({
   type,
   currentAmount,
-  walletAmount,
   maxAmount,
   minAmount,
 }: IValidationAmount) {
   if (type === CHARGE) {
-    if (maxAmount > currentAmount) {
+    console.log(type, currentAmount, maxAmount, minAmount);
+    if (Number(maxAmount) < Number(currentAmount)) {
       return {
         error: true,
-        msg: `The maximum charge for wallet is ${maxAmount}`,
+        msg: `The maximum amount for deposits is ${getCurrentcyFormat({
+          amount: maxAmount,
+          currency: "EUR",
+        })}`,
       };
-    } else if (minAmount < currentAmount) {
+    } else if (Number(minAmount) > Number(currentAmount)) {
       return {
         error: true,
-        msg: `The minimum charge for wallet is ${maxAmount}`,
+        msg: `The minimum amount for deposits is ${getCurrentcyFormat({
+          amount: minAmount,
+          currency: "EUR",
+        })}`,
       };
     } else {
       return {
@@ -77,13 +83,14 @@ export function isValidAmountTransferCCP({
           currency: "DZD",
         })}`,
       };
-    } else if (walletAmount < currentAmount) {
+    } else if (Number(walletAmount) < Number(currentAmount)) {
       return {
         error: true,
-        msg: `The maximum Transfer is ${getCurrentcyFormat({
-          amount: walletAmount,
-          currency: "DZD",
-        })}  `,
+        msg: `You don't have enough funds in your wallet`,
+        // msg: `The maximum Transfer is ${getCurrentcyFormat({
+        //   amount: maxAmount,
+        //   currency: "DZD",
+        // })}`,
       };
     } else {
       return {
@@ -137,13 +144,14 @@ export function isValidAmountTransferBARIDIMOB({
         amount: minAmount,
       })}  `,
     };
-  } else if (walletAmount < currentAmount) {
+  } else if (Number(walletAmount) < Number(currentAmount)) {
     return {
       error: true,
-      msg: `The maximum Transfer is  ${getCurrentcyFormat({
-        currency: "DZD",
-        amount: walletAmount,
-      })}  `,
+      msg: `You don't have enough funds in your wallet`,
+      // msg: `The maximum Transfer is ${getCurrentcyFormat({
+      //   amount: maxAmount,
+      //   currency: "DZD",
+      // })}`,
     };
   } else {
     return {

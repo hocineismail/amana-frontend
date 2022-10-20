@@ -447,7 +447,7 @@ export default function Transfer({
                                   fontSize: "16px",
                                 }}
                               >
-                                Not available
+                                Coming soon
                               </div>
                             </div>
                           );

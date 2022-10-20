@@ -29,7 +29,7 @@ export default function useFees() {
       const fees = querySnapshot.docs.map((doc) => ({
         fees: doc.data(),
       }));
-      
+      console.log(fees)
       setFees(fees);
       setloading(false)
     });

@@ -155,7 +155,7 @@ export default function Signup({}: Props) {
           autocapitalize: "off",
         },
         inputValidator: (value) => {
-          if (!value) return "Your text here";
+          if (!value) return "Password is wrong";
           else return null;
         },
         showCancelButton: true,

@@ -25,13 +25,15 @@ export default function Navbar() {
          items-center mx-auto"
       >
         <div className="flex ">
-          <a href="#" className="flex items-center">
-            <img
-              src={`/logo white.png`}
-              className="mr-3 h-6 sm:h-10"
-              alt="Flowbite Logo"
-            />
-          </a>
+          <Link href="/">
+            <a className="flex items-center">
+              <img
+                src={`/logo white.png`}
+                className="mr-3 h-10 sm:h-10"
+                alt="Flowbite Logo"
+              />
+            </a>
+          </Link>
 
           <div
             className="hidden w-full md:block md:w-auto ml-10"

@@ -489,8 +489,8 @@ export function validationDelivery({
   }
 
 export function validationPassword(password: string)  {
-  if (!validator.isLength(password, { min: 8, max: 20 })) {
-    return "Password must be at between 8 and 20 characters"
+  if (!validator.isLength(password, { min: 8})) {
+    return "Your Password must be at least 8 characters"
   } 
   return null
 }  
@@ -537,7 +537,6 @@ export function validationProvince(string: string)  {
   } 
   return null
 }
-
 export function validationFirstName(string: string)  {
   const regex = new RegExp('^[^<>||=]*$');  
   if (!regex.test(string) || !validator.isLength(string, { min: 2, max: 15})) {
@@ -552,7 +551,6 @@ export function validationLastName(string: string)  {
   } 
   return null
 }
-
 export function validationBirthday(birthday: Date)  {
   
   let isValidBirthday: number = getCurrentAge(birthday || new Date())
@@ -562,8 +560,6 @@ export function validationBirthday(birthday: Date)  {
   } 
   return null
 }
-
-
 export function validationInformation(data: any) {
  
   if (validationEmail(data.email)) {
@@ -603,7 +599,6 @@ export function validationSignupStepOne(data: any) {
   }
   return false
 }
-
 export function validationSignupStepTwo(data: any) {
  
   if (validationState(data.state)) {
