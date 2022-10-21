@@ -2,7 +2,7 @@ import { collection, addDoc, serverTimestamp } from "firebase/firestore";
 import React, { useEffect } from "react";
 
 //@ts-ignore
-import CurrencyFormat from "react-currency-format";
+import dynamic from "next/dynamic";
 import { FiCopy } from "react-icons/fi";
 import Swal from "sweetalert2";
 // import { getCurrentcyFormat } from "../../utils/getCurrencyFormat";
@@ -248,7 +248,30 @@ export default function Charge({ onCloseModel }: Props) {
       );
     }
   };
-
+  const onCopyAll = async () => {
+    try {
+      await navigator.clipboard.writeText(
+        `Beneficiary name: ${banks[0]?.bank.account_name}\nBank address: ${
+          banks[0]?.bank.bank_address
+        }\nBank name: ${banks[0]?.bank.bank_name}\nIBAN: ${
+          banks[0]?.bank.Iban
+        }\nBIC/SWIFT: ${banks[0]?.bank.bic_swift}\nPayment Reference: ${
+          refName + "-" + reference
+        }`
+      );
+      console.log(
+        `Beneficiary name: ${banks[0]?.bank.account_name}\nBank address: ${
+          banks[0]?.bank.bank_address
+        }\nBank name: ${banks[0]?.bank.bank_name}\nIBAN: ${
+          banks[0]?.bank.Iban
+        }\nBIC/SWIFT: ${banks[0]?.bank.bic_swift}\nPayment Reference: ${
+          refName + "-" + reference
+        }`
+      );
+    } catch (err) {
+      console.error("Failed to copy: ", err);
+    }
+  };
   return (
     <>
       {loading ? <div className="loading">Loading&#8230;</div> : null}
@@ -596,23 +619,26 @@ export default function Charge({ onCloseModel }: Props) {
                               Copy All:
                               <span
                                 className="tooltip-copy"
-                                onClick={() => {
-                                  navigator.clipboard.writeText(
-                                    `Beneficiary name: ${
-                                      banks[0]?.bank.account_name
-                                    }\nBank address: ${
-                                      banks[0]?.bank.bank_address
-                                    }\nBank name: ${
-                                      banks[0]?.bank.bank_name
-                                    }\nIBAN: ${
-                                      banks[0]?.bank.Iban
-                                    }\nBIC/SWIFT: ${
-                                      banks[0]?.bank.bic_swift
-                                    }\nPayment Reference: ${
-                                      refName + "-" + reference
-                                    }`
-                                  );
-                                }}
+                                onClick={
+                                  onCopyAll
+                                  //() => {
+                                  // navigator.clipboard.writeText(
+                                  //   `Beneficiary name: ${
+                                  //     banks[0]?.bank.account_name
+                                  //   }\nBank address: ${
+                                  //     banks[0]?.bank.bank_address
+                                  //   }\nBank name: ${
+                                  //     banks[0]?.bank.bank_name
+                                  //   }\nIBAN: ${
+                                  //     banks[0]?.bank.Iban
+                                  //   }\nBIC/SWIFT: ${
+                                  //     banks[0]?.bank.bic_swift
+                                  //   }\nPayment Reference: ${
+                                  //     refName + "-" + reference
+                                  //   }`
+                                  // );
+                                  //}
+                                }
                               >
                                 <FiCopy
                                   size={18}
@@ -632,8 +658,8 @@ export default function Charge({ onCloseModel }: Props) {
                               Beneficiary name: {banks[0]?.bank.account_name}
                               <span
                                 className="tooltip-copy"
-                                onClick={() => {
-                                  navigator.clipboard.writeText(
+                                onClick={async () => {
+                                  await navigator.clipboard.writeText(
                                     `${banks[0]?.bank.account_name}`
                                   );
                                 }}
@@ -657,8 +683,8 @@ export default function Charge({ onCloseModel }: Props) {
                               Bank address : {banks[0]?.bank.bank_address}{" "}
                               <span
                                 className="tooltip-copy"
-                                onClick={() => {
-                                  navigator.clipboard.writeText(
+                                onClick={async () => {
+                                  await navigator.clipboard.writeText(
                                     `${banks[0]?.bank.bank_address}`
                                   );
                                 }}
@@ -682,8 +708,8 @@ export default function Charge({ onCloseModel }: Props) {
                               IBAN: {banks[0]?.bank.Iban}
                               <span
                                 className="tooltip-copy"
-                                onClick={() => {
-                                  navigator.clipboard.writeText(
+                                onClick={async () => {
+                                  await navigator.clipboard.writeText(
                                     `${banks[0]?.bank.Iban}`
                                   );
                                 }}
@@ -706,8 +732,8 @@ export default function Charge({ onCloseModel }: Props) {
                               Bank name: {banks[0]?.bank.bank_name}
                               <span
                                 className="tooltip-copy"
-                                onClick={() => {
-                                  navigator.clipboard.writeText(
+                                onClick={async () => {
+                                  await navigator.clipboard.writeText(
                                     `${banks[0]?.bank.bank_name}`
                                   );
                                 }}
@@ -730,8 +756,8 @@ export default function Charge({ onCloseModel }: Props) {
                               BIC/SWIFT: {banks[0]?.bank.bic_swift}
                               <span
                                 className="tooltip-copy"
-                                onClick={() => {
-                                  navigator.clipboard.writeText(
+                                onClick={async () => {
+                                  await navigator.clipboard.writeText(
                                     `${banks[0]?.bank.bic_swift}`
                                   );
                                 }}
@@ -758,8 +784,8 @@ export default function Charge({ onCloseModel }: Props) {
                               Transfer Reference: {refName + "-" + reference}
                               <span
                                 className="tooltip-copy"
-                                onClick={() => {
-                                  navigator.clipboard.writeText(
+                                onClick={async () => {
+                                  await navigator.clipboard.writeText(
                                     `${refName + "-" + reference}`
                                   );
                                 }}
