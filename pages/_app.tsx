@@ -21,10 +21,10 @@ function MyApp({ Component, pageProps }: AppProps) {
   }, []);
 
   function checkWebsiteAccess() {
-    let API = process.env.API || "";
+    // let API = process.env.API || "";
     try {
       axios
-        .get(API + "/api/maintanance")
+        .get("/api/maintanance")
         .then((response: any) => {
           setAccess(!response.data.maintanance);
         })
