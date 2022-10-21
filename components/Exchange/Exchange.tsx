@@ -14,7 +14,7 @@ interface IMoney {
   moneyDinar: number;
 }
 export default function Exchange() {
-  const [Exchange, setExchange] = React.useState<IMoney>({
+  const [Exchange, setExchange] = React.useState<IMoney | any>({
     moneyEuro: 1,
     moneyDinar: 1,
   });
@@ -27,7 +27,7 @@ export default function Exchange() {
   /* function to get exchange price from firestore in realtime */
   useEffect(() => {
     if (exchange?.amount) {
-      setExchange((prevState) => ({
+      setExchange((prevState: any) => ({
         ...prevState,
         moneyDinar: prevState.moneyEuro * exchange.amount,
       }));
@@ -112,16 +112,16 @@ export default function Exchange() {
             // groupSeparator=","
             // decimalSeparator="."
 
-            // fixedDecimalLength={2}
+            fixedDecimalLength={2}
             prefix="DZD  "
-            value={Exchange.moneyDinar.toFixed(2)}
+            value={Number(Exchange.moneyDinar).toFixed(2)}
             onValueChange={(value, name) => {
-              if (value) {
+              if (value !== undefined) {
                 let max = 1000000 * Number(exchange?.amount || 1);
                 let currency = Number(value) < max ? Number(value) : max;
                 setExchange({
                   moneyEuro: currency / Number(exchange?.amount || 1),
-                  moneyDinar: currency,
+                  moneyDinar: value,
                 });
               } else {
                 setExchange({

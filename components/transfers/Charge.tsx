@@ -1,11 +1,12 @@
 import { collection, addDoc, serverTimestamp } from "firebase/firestore";
 import React, { useEffect } from "react";
-// import CurrencyInput from "react-currency-input-field";
+
 //@ts-ignore
 import CurrencyFormat from "react-currency-format";
 import { FiCopy } from "react-icons/fi";
 import Swal from "sweetalert2";
-import { getCurrentcyFormat } from "../../utils/getCurrencyFormat";
+// import { getCurrentcyFormat } from "../../utils/getCurrencyFormat";
+import CurrencyInput from "react-currency-input-field";
 import {
   onGetBanks,
   onGetCountries,
@@ -364,16 +365,15 @@ export default function Charge({ onCloseModel }: Props) {
                               <label className="font-bold text-black">
                                 You’re adding
                               </label>
-                              <CurrencyFormat
-                                value={Exchange.moneyEuro.toFixed(2)}
-                                thousandSeparator={true}
-                                decimalScale={2}
+                              <CurrencyInput
+                                value={Number(Exchange.moneyEuro).toFixed(2)}
                                 prefix={"€ "}
+                                allowDecimals={true}
+                                allowNegativeValue={false}
                                 className={`rounded-2xl mt-3${
                                   error.error ? " border-red" : ""
                                 }  w-full h-12 text-bold text-pink-500`}
-                                onValueChange={(values: any) => {
-                                  const { formattedValue, value } = values;
+                                onValueChange={(value: any) => {
                                   // formattedValue = $2,223
                                   // value ie, 2223
                                   if (checked === 1) {
