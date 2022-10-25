@@ -9,7 +9,7 @@ import { Provider } from "react-redux";
 import { store } from "../getStore";
 // import { SSRProvider } from "@react-aria/ssr";
 // import Script from "next/script";
-
+import Script from "next/script";
 import axios from "axios";
 import Maintanance from "../components/pages/maintanance/Maintanance";
 import Whatsapp from "../components/whatsapp/Whatsapp";
@@ -47,7 +47,7 @@ function MyApp({ Component, pageProps }: AppProps) {
           content="Amana Transfers is a subdivision of CNG Global Services LTD, a UK based company that also holds offices in France & Algeria.
           Amana Transfers is the fastest, cheapest and most secure way of sending money to your loved ones in Algeria ."
         />
-        {/* <script src="https://www.google.com/recaptcha/api.js" async></script> */}
+        <Script src="https://www.google.com/recaptcha/api.js" async />
       </Head>
       <NextNProgress
         color="#29D"
