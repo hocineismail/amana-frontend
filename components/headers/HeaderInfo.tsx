@@ -11,7 +11,7 @@ export default function HeaderInfo({}: Props) {
   return (
     <div className=" mx-auto  hidden md:flex flex-wrap justify-between mt-10 ">
       <div style={{ margin: "30px" }}>
-        <H2 className="text-3xl font-bold text-white mt-10">
+        <H2 className="font-bold text-white mt-10">
           Send Money to Your family in&nbsp;
           <span className="bg-orange rounded-2xl p-2  ">Algeria Now </span>
         </H2>
@@ -31,7 +31,9 @@ export default function HeaderInfo({}: Props) {
             <Button
               dataTestid="signup"
               className=" mt-5 pl-10 pr-10    fw-400 text-black bg-white
-              border border-orange  h-12 justify-item 
+              border border-white  h-12 justify-item 
+              transform transition duration-500 
+              hover:border-orange
               hover:bg-orange  focus:ring-4 
               focus:ring-orange-300 font-bold 
               rounded-2xl  text-base px-5 py-2.5

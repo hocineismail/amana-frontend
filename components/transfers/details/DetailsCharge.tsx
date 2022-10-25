@@ -125,7 +125,9 @@ export default function DetailsCharge({ item }: Props) {
         {item.method === "By Bank" ? (
           <tr className="details-tr">
             <th className="details-th">Reference:</th>
-            <td className="details-td">{item.reference}</td>
+            <td className="details-td">
+              {item.referenceName}-{item.referenceNumber}
+            </td>
           </tr>
         ) : null}
         {item.method !== "By Bank" ? (

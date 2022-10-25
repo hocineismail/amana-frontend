@@ -124,8 +124,9 @@ export default function Navbar() {
                   type="button"
                   className="text-orange 
               border border-orange
+                transform transition duration-500 
               bg-transparent
-              hover:bg-transparent 
+              
             hover:text-white
                focus:ring-4 
               focus:ring-orange-300 font-medium 
@@ -141,7 +142,9 @@ export default function Navbar() {
                   type="button"
                   className="text-white bg-orange
                     border border-orange
-                    hover:bg-orange  focus:ring-4 
+                    hover:bg-[#ffa600de]
+                    transform transition duration-500 
+                    focus:ring-4 
                     focus:ring-orange-300 font-medium 
                     rounded-2xl text-sm px-5 py-2.5
                     text-center mr-2 mb-2 dark:bg-orange-600 

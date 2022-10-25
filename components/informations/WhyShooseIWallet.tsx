@@ -43,7 +43,7 @@ we also have hundreds of happy clients`,
 ];
 export default function WhyShooseIWallet({}: Props) {
   return (
-    <div className=" pt-10 pb-40  m-auto bg-grayHome rounded-t-3xl ">
+    <div className=" pt-10 pb-40  m-auto   rounded-t-3xl ">
       <div className="h-2 w-10 rounded-lg m-auto bg-orange mb-5"></div>
       <H3 className="text-2xl text-center text-blue font-bold center">
         Why Choose Us?

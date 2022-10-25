@@ -26,7 +26,7 @@ export default function Wallet({ amount, amountBlocked }: Props) {
   const { exchange } = useAppSelector(globalState);
   if (!exchange?.amount)
     return (
-      <div className="bg-blue text-center text-white pt-14 pb-14">
+      <div className="bg-[#122c47]  text-center text-white pt-14 pb-14">
         <div style={{ maxWidth: "200px", margin: "auto", height: "80px" }}>
           <div className="load-wraper-wallet">
             <div className="activity-wallet"></div>
@@ -66,7 +66,7 @@ export default function Wallet({ amount, amountBlocked }: Props) {
       </div>
     );
   return (
-    <div className="bg-blue text-center text-white pt-14 pb-14">
+    <div className="bg-[#122c47] text-center text-white pt-14 pb-14">
       <WalletHeader wallet={amount} exchange={exchange} />
       <WalletActions amountBlocked={amountBlocked} wallet={amount} />
     </div>

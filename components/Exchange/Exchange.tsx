@@ -140,7 +140,10 @@ export default function Exchange() {
               className="mt-5 pl-10 pr-10 w-full  fw-400 text-black bg-orange
               border border-orange  h-12
               justify-item 
-              hover:bg-orange  focus:ring-4 
+               transform transition duration-500 
+              hover:bg-blue 
+              hover:text-white
+              hover:border-blue  focus:ring-4 
               focus:ring-orange-300 font-bold 
               rounded-2xl  text-base px-5 py-2.5
               text-center mr-2 mb-2 dark:bg-orange-600 
