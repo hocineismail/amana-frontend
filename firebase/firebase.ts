@@ -23,13 +23,5 @@ export const app = initializeApp(firebaseConfig)
 //   // tokens as needed.
 //   isTokenAutoRefreshEnabled: true
 // });
- 
-initializeAppCheck(app, {
-  provider: new ReCaptchaV3Provider('6LfWTssgAAAAAKTxLCgGeZKMtlFluqjjpyL6hAAu'),
 
-  // Optional argument. If true, the SDK automatically refreshes App Check
-  // tokens as needed.
-  isTokenAutoRefreshEnabled: true
-});
- 
 export const db = getFirestore(app)
