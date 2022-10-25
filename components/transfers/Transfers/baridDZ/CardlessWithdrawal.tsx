@@ -232,15 +232,15 @@ export default function CardlessWithdrawal({ step, onGetForm, wallet }: Props) {
             <CurrencyInput
               value={Number(amount.euroWithoutFees).toFixed(2)}
               prefix={"€ "}
+              maxLength={10}
               allowDecimals={true}
               allowNegativeValue={false}
               disabled
               className="rounded-2xl mt-3   w-full h-12 text-bold text-pink-500"
-              onValueChange={(values: any) => {
-                const { value } = values;
+              onValueChange={(value: any) => {
                 // formattedValue = $2,223
                 // value ie, 2223
-                onChangeEuro(value);
+                onChangeEuro(value || 1);
               }}
             />
           </div>

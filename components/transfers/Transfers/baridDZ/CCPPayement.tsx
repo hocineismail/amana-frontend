@@ -84,9 +84,11 @@ export default function CCPPayement({ step, onGetForm, wallet }: Props) {
         (amountValue - Number(getFeeAmana(amountValue))) *
         Number(exchange?.amount),
       minAmount: 1000,
-      maxAmount: (2000 - Number(getFeeAmana(2000))) * Number(exchange?.amount),
+      maxAmount: (2001 - Number(getFeeAmana(2001))) * Number(exchange?.amount),
       method: CCP,
     });
+    console.log(isValid);
+
     setError(isValid);
     onGetForm({
       ...request,
@@ -316,14 +318,13 @@ export default function CCPPayement({ step, onGetForm, wallet }: Props) {
               value={Number(amount.euroWithoutFees).toFixed(2)}
               prefix={"€ "}
               allowDecimals={true}
+              maxLength={10}
               allowNegativeValue={false}
               className={`rounded-2xl mt-3${
                 error.error ? " border-red focus:border-red border-2" : ""
               }  w-full h-12 text-bold text-pink-500`}
               onValueChange={(value: any) => {
-                value = value <= 1000000 ? value : 1000000; // formattedValue = $2,223
-                // value ie, 2223
-                onChangeEuro(value ? value : 0);
+                onChangeEuro(value || 0);
               }}
             />
           </div>
@@ -430,7 +431,7 @@ export default function CCPPayement({ step, onGetForm, wallet }: Props) {
             <CurrencyInput
               value={Number(amount.dinar).toFixed(2)}
               prefix={"DZD "}
-              max={100}
+              maxLength={10}
               allowDecimals={true}
               allowNegativeValue={false}
               className={`rounded-2xl mt-3${
@@ -439,9 +440,12 @@ export default function CCPPayement({ step, onGetForm, wallet }: Props) {
               onValueChange={(value: any) => {
                 // formattedValue = $2,223
                 // value ie, 2223
-                value =
-                  value / Number(exchange?.amount) <= 1000000 ? value : 1000000;
-                onChangeDinar(value);
+
+                if (value) {
+                  onChangeDinar(value);
+                } else {
+                  onChangeEuro(1);
+                }
               }}
             />{" "}
             {error.error ? (

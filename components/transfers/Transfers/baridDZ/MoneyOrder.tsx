@@ -1,7 +1,8 @@
 import React from "react";
 
 //@ts-ignore
-import CurrencyFormat from "react-currency-format";
+// import CurrencyFormat from "react-currency-format";
+import CurrencyInput from "react-currency-input-field";
 import {
   financial,
   getCurrentcyFormat,
@@ -227,21 +228,19 @@ export default function MoneyOrder({ step, onGetForm, wallet }: Props) {
           </div>
           <div className="mt-2 mb-2">
             <label className="font-bold text-black">You send</label>
-            <CurrencyFormat
-              value={amount.euroWithoutFees}
-              thousandSeparator={true}
-              fixedDecimalScale={true}
-              decimalScale={2}
+            <CurrencyInput
+              value={Number(amount.euroWithoutFees).toFixed(2)}
               prefix={"€ "}
-              allowNegative={false}
+              allowDecimals={true}
+              maxLength={10}
+              allowNegativeValue={false}
               className={`rounded-2xl mt-3${
                 error.error ? " border-red focus:border-red border-2" : ""
               }  w-full h-12 text-bold text-pink-500`}
-              onValueChange={(values: any) => {
-                const { value } = values;
+              onValueChange={(value: any) => {
                 // formattedValue = $2,223
                 // value ie, 2223
-                onChangeEuro(value);
+                onChangeEuro(value || 1);
               }}
             />
           </div>
@@ -346,21 +345,23 @@ export default function MoneyOrder({ step, onGetForm, wallet }: Props) {
           </div>
           <div className="mt-2 mb-2">
             <label className="font-bold text-black">Receiver gets</label>
-            <CurrencyFormat
-              value={Number(amount.dinar)}
-              thousandSeparator={true}
-              fixedDecimalScale={true}
-              decimalScale={2}
-              prefix={"DZ "}
-              allowNegative={false}
+            <CurrencyInput
+              value={Number(amount.dinar).toFixed(2)}
+              prefix={"DZD "}
+              maxLength={10}
+              allowDecimals={true}
+              allowNegativeValue={false}
               className={`rounded-2xl mt-3${
                 error.error ? " border-red focus:border-red border-2" : ""
               }  w-full h-12 text-bold text-pink-500`}
-              onValueChange={(values: any) => {
-                const { formattedValue, value } = values;
+              onValueChange={(value: any) => {
                 // formattedValue = $2,223
                 // value ie, 2223
-                onChangeDinar(value);
+                if (value) {
+                  onChangeDinar(value);
+                } else {
+                  onChangeEuro(1);
+                }
               }}
             />
             {error.error ? (

@@ -421,7 +421,11 @@ export default function FromOffice({ step, onGetForm, wallet }: Props) {
               onValueChange={(value: any) => {
                 // formattedValue = $2,223
                 // value ie, 2223
-                onChangeDinar(value ? value : 0);
+                if (value) {
+                  onChangeDinar(value);
+                } else {
+                  onChangeEuro(1);
+                }
               }}
             />{" "}
             {error.error ? (

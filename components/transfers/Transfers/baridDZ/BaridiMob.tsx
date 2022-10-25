@@ -231,6 +231,7 @@ export default function BaridiMob({ step, onGetForm, wallet }: Props) {
             <CurrencyInput
               value={Number(amount.euroWithoutFees).toFixed(2)}
               prefix={"€ "}
+              maxLength={10}
               allowDecimals={true}
               allowNegativeValue={false}
               className={`rounded-2xl mt-3${
@@ -239,7 +240,7 @@ export default function BaridiMob({ step, onGetForm, wallet }: Props) {
               onValueChange={(value: any) => {
                 // formattedValue = $2,223
                 // value ie, 2223
-                onChangeEuro(value ? value : 0);
+                onChangeEuro(value || 1);
               }}
             />
           </div>
@@ -346,6 +347,7 @@ export default function BaridiMob({ step, onGetForm, wallet }: Props) {
             <CurrencyInput
               value={Number(amount.dinar).toFixed(2)}
               prefix={"DZD "}
+              maxLength={10}
               allowDecimals={true}
               allowNegativeValue={false}
               className={`rounded-2xl mt-3${
@@ -354,7 +356,11 @@ export default function BaridiMob({ step, onGetForm, wallet }: Props) {
               onValueChange={(value: any) => {
                 // formattedValue = $2,223
                 // value ie, 2223
-                onChangeDinar(value ? value : 0);
+                if (value) {
+                  onChangeDinar(value);
+                } else {
+                  onChangeEuro(1);
+                }
               }}
             />{" "}
             {error.error ? (

@@ -293,7 +293,7 @@ export default function HomeDelivery({
               onValueChange={(value: any) => {
                 // formattedValue = $2,223
                 // value ie, 2223
-                onChangeEuro(value);
+                onChangeEuro(value || 1);
               }}
             />
           </div>
@@ -452,7 +452,11 @@ export default function HomeDelivery({
               onValueChange={(value: any) => {
                 // formattedValue = $2,223
                 // value ie, 2223
-                onChangeDinar(value);
+                if (value) {
+                  onChangeDinar(value);
+                } else {
+                  onChangeEuro(1);
+                }
               }}
             />
             {amount.dinar < 19999 ? (
