@@ -12,8 +12,6 @@ import {
   onGetAmountBlocked,
 } from "../../actions/actions";
 
-import { app } from "../../firebase/firebase";
-import { initializeAppCheck, ReCaptchaV3Provider } from "firebase/app-check";
 type Props = {};
 
 export default function Dashboard({}: Props) {
@@ -25,17 +23,7 @@ export default function Dashboard({}: Props) {
       dispatch(onGetAmountAvailable());
     }
   }, [dispatch, firstFetch]);
-  React.useEffect(() => {
-    initializeAppCheck(app, {
-      provider: new ReCaptchaV3Provider(
-        "6LfWTssgAAAAAKTxLCgGeZKMtlFluqjjpyL6hAAu"
-      ),
 
-      // Optional argument. If true, the SDK automatically refreshes App Check
-      // tokens as needed.
-      isTokenAutoRefreshEnabled: true,
-    });
-  }, []);
   return (
     <Layout>
       <>
