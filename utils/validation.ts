@@ -351,7 +351,7 @@ export function validationFromOffice({
     var pattern = /^\d+$/;
     const patternPhone = /[^\d]/;
     if (data?.fullname) {
-     console.log('console')
+  
       if (!validator.isLength(data?.fullname||"", { min: 3, max: 50 })) {
         console.log("hena fullname")
         isErrorFounded = true;
@@ -419,7 +419,7 @@ export function validationDelivery({
     step,
     general,
   }: IValidationCCPpayment) {
-    console.log(data)
+ 
     let isErrorFounded = false;
     let phone = data?.phone_number || data?.phone
     if (step === 0) {

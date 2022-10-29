@@ -45,6 +45,7 @@ export default function FromOffice({ step, onGetForm, wallet }: Props) {
   });
   const { exchange, DZOffices, fees, firstFetchFees, firstFetchEUOffices } =
     useAppSelector(globalState);
+
   const dispatch = useAppDispatch();
   React.useEffect(() => {
     if (firstFetchFees) {

@@ -3,7 +3,7 @@ export const BARIDIMOB = "Barid Dz"
 export const CCP = "CCP Payment"
 export const CARDLESS = "Cardless withDrawal"
 export const MONEY_ORDER = "Money order"
-export const FROM_OFFICE = "By Office"
+export const IN_OFFICE = "In Office"
 export const DELIVERY = "Delivery to home"
 export const AMOUNT_SELECTED = 2000
 

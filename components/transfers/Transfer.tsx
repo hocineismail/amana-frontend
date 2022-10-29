@@ -311,9 +311,9 @@ export default function Transfer({
         createdAt: serverTimestamp(),
       });
       const walletRed = doc(db, "users", currentUser.uid);
-
+      const blocked = Number(amountBlocked) + Number(reqestMoney.amount);
       await updateDoc(walletRed, {
-        amount_blocked: Number(amountBlocked) + Number(reqestMoney.amount),
+        amount_blocked: blocked.toFixed(2),
       });
 
       swalWithBootstrapButtons

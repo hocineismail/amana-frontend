@@ -743,6 +743,10 @@ export default function Signup({}: Props) {
                 <div className="flex justify-center  items-center  m-auto">
                   {display.auth ? (
                     <button
+                      disabled={
+                        (password.newPassword || "").length < 8 ||
+                        password.newPassword !== password.confirmNewPassword
+                      }
                       className={`w-[70%] mt-2 pl-10 pr-10 
                         fw-400  ${
                           (password.newPassword || "").length < 8 ||
@@ -765,14 +769,14 @@ export default function Signup({}: Props) {
                   ) : (
                     <button
                       onClick={() => onUpdateInformation()}
+                      disabled={validationInformation(form)}
                       className={`w-[70%] mt-2 pl-10 pr-10 
                         fw-400  ${
                           validationInformation(form)
                             ? "text-black bg-gray cursor-not-allowed hover:bg-gray dark:hover:bg-gray border border-gray"
                             : "text-white  bg-blue hover:bg-blue dark:hover:bg-blue  border border-blue"
                         }
-                         h-12
-                        justify-item 
+                         h-12  justify-item 
                           focus:ring-4 
                         focus:ring-blue-300 font-bold 
                         rounded-2xl  text-base px-5 py-2.5

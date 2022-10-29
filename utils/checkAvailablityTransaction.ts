@@ -1,4 +1,4 @@
-import { BARIDIMOB, CARDLESS, CCP, DELIVERY, MONEY_ORDER } from "../constants/constants";
+import { BARIDIMOB, CARDLESS, CCP, DELIVERY, MONEY_ORDER, IN_OFFICE } from "../constants/constants";
 
 export function checkAvailablityTransaction (method: string, wallet: number, amountEuro: number,
      amountDz: number) {
@@ -30,7 +30,11 @@ export function checkAvailablityTransaction (method: string, wallet: number, amo
         if (amountDz < 2000 || amountDz > 100000) {
             return true
         }   
-    }else {
+    } else if (method ===  IN_OFFICE ) {
+        if (amountDz < 1000|| amountDz > 200000) {
+            return true
+        } 
+    } else {
         return false
     }
 

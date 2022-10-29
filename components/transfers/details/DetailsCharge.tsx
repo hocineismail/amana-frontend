@@ -74,8 +74,9 @@ export default function DetailsCharge({ item }: Props) {
         <tr className="details-tr">
           <th className="details-th">Status:</th>
           <td className="details-td">
-            {dateIsExpired({
-              date: item.request?.createdAt?.toDate().toString(),
+            {item.status === "Awaiting" &&
+            dateIsExpired({
+              date: item.createdAt?.toDate().toString(),
             }) ? (
               <b>Canceled</b>
             ) : (

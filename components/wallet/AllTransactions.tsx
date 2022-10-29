@@ -440,6 +440,7 @@ export default function AllTransactions({ amountBlocked }: Props) {
                   >
                     <div style={{ minWidth: "129px" }}>
                       {item.request?.type === "Charge" &&
+                      item.request.status === "Awaiting" &&
                       dateIsExpired({
                         date: item.request?.createdAt?.toDate().toString(),
                       }) ? (
@@ -464,17 +465,17 @@ export default function AllTransactions({ amountBlocked }: Props) {
                               ? "blue"
                               : "gray"
                           }
-                border border-${
-                  item.request.status === "Awaiting"
-                    ? "orange"
-                    : item.request.status === "Canceled"
-                    ? "red"
-                    : item.request.status === "Confirmed"
-                    ? "green"
-                    : item.request.status === "In Process"
-                    ? "blue"
-                    : "gray"
-                }
+                  border border-${
+                    item.request.status === "Awaiting"
+                      ? "orange"
+                      : item.request.status === "Canceled"
+                      ? "red"
+                      : item.request.status === "Confirmed"
+                      ? "green"
+                      : item.request.status === "In Process"
+                      ? "blue"
+                      : "gray"
+                  }
                   font-bold 
                 rounded-2xl text-sm px-5 py-2.5
                 text-center mr-2 mb-2`}

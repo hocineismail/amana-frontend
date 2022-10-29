@@ -16,6 +16,7 @@ import { onUpdateRightSidebarStatus } from "../../features/sidebarSlice";
 import { db } from "../../firebase/firebase";
 import useFirebaseAuth from "../../hooks/useFirebaseAuth";
 import { useAppDispatch } from "../../hooks/useReduxHook";
+import { dateIsExpired } from "../../utils/dateIsExpired";
 import { getCurrentcyFormat } from "../../utils/getCurrencyFormat";
 import Badge from "../common/Badge/Badge";
 import Placeholder from "../placeholder/Placeholder";
@@ -389,36 +390,47 @@ export default function ChargerWallet({ amountBlocked }: Props) {
                       fontSize: "14px",
                     }}
                   >
-                    {" "}
                     <div style={{ minWidth: "129px" }}>
-                      <Badge
-                        className={`text-white bg-${
-                          item.request.status === "Awaiting"
-                            ? "orange"
-                            : item.request.status === "Canceled"
-                            ? "red"
-                            : item.request.status === "Confirmed"
-                            ? "green"
-                            : item.request.status === "In Process"
-                            ? "blue"
-                            : "gray"
-                        }
-                border border-${
-                  item.request.status === "Awaiting"
-                    ? "orange"
-                    : item.request.status === "Canceled"
-                    ? "red"
-                    : item.request.status === "Confirmed"
-                    ? "green"
-                    : item.request.status === "In Process"
-                    ? "blue"
-                    : "gray"
-                }
+                      {item.request?.type === "Charge" &&
+                      item.request?.status === "Awaiting" &&
+                      dateIsExpired({
+                        date: item.request?.createdAt?.toDate().toString(),
+                      }) ? (
+                        <Badge
+                          className={`text-white bg-red  border border-red
+                          font-bold rounded-2xl text-sm px-5 py-2.5 text-center mr-2 mb-2`}
+                          text={"Canceled"}
+                        />
+                      ) : (
+                        <Badge
+                          className={`text-white bg-${
+                            item.request.status === "Awaiting"
+                              ? "orange"
+                              : item.request.status === "Canceled"
+                              ? "red"
+                              : item.request.status === "Confirmed"
+                              ? "green"
+                              : item.request.status === "In Process"
+                              ? "blue"
+                              : "gray"
+                          }
+                  border border-${
+                    item.request.status === "Awaiting"
+                      ? "orange"
+                      : item.request.status === "Canceled"
+                      ? "red"
+                      : item.request.status === "Confirmed"
+                      ? "green"
+                      : item.request.status === "In Process"
+                      ? "blue"
+                      : "gray"
+                  }
                   font-bold 
                 rounded-2xl text-sm px-5 py-2.5
                 text-center mr-2 mb-2`}
-                        text={item.request?.status}
-                      />
+                          text={item.request?.status}
+                        />
+                      )}
                     </div>
                   </td>
                   <td
@@ -463,7 +475,10 @@ export default function ChargerWallet({ amountBlocked }: Props) {
                       </button>
                       {item.request.status === "Awaiting" ? (
                         <>
-                          {item.request.type === "Charge" ? (
+                          {item.request.type === "Charge" &&
+                          !dateIsExpired({
+                            date: item.request?.createdAt?.toDate().toString(),
+                          }) ? (
                             <button
                               onClick={() => onConfirmCharge(item)}
                               className="text-white bg-green
@@ -474,22 +489,25 @@ export default function ChargerWallet({ amountBlocked }: Props) {
                                       text-center mr-2 mb-2 dark:bg-green-600 
                                     dark:hover:bg-green dark:focus:ring-green-800"
                             >
-                              {" "}
                               Confirm
                             </button>
-                          ) : null}{" "}
-                          <button
-                            onClick={() => onCanceledRequest(item)}
-                            className="text-white bg-red
-                        border border-red
-                        hover:bg-red  focus:ring-4 
-                        focus:ring-red-300 font-medium 
-                        rounded-2xl text-sm px-5 py-2.5
-                        text-center mr-2 mb-2 dark:bg-red-600 
-                      dark:hover:bg-red dark:focus:ring-red-800"
-                          >
-                            Cancel
-                          </button>
+                          ) : null}
+                          {!dateIsExpired({
+                            date: item.request?.createdAt?.toDate().toString(),
+                          }) ? (
+                            <button
+                              onClick={() => onCanceledRequest(item)}
+                              className="text-white bg-red
+                                border border-red
+                                hover:bg-red  focus:ring-4 
+                                focus:ring-red-300 font-medium 
+                                rounded-2xl text-sm px-5 py-2.5
+                                text-center mr-2 mb-2 dark:bg-red-600 
+                              dark:hover:bg-red dark:focus:ring-red-800"
+                            >
+                              Cancel
+                            </button>
+                          ) : null}
                         </>
                       ) : null}
                     </div>
