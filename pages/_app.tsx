@@ -21,6 +21,7 @@ function MyApp({ Component, pageProps }: AppProps) {
   React.useEffect(() => {
     AOS.init();
     if (process.env.RECAPTCHA_PUBLIC_KEY) {
+      alert(process.env.RECAPTCHA_PUBLIC_KEY);
       initializeAppCheck(app, {
         provider: new ReCaptchaV3Provider(process.env.RECAPTCHA_PUBLIC_KEY),
 
