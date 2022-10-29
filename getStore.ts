@@ -9,7 +9,7 @@ import userState   from "./features/userSlice";
 // import productsReducer from "./reducers/productsReducers";
  
 export const store = configureStore({
-  devTools:true,
+  devTools: process.env.DEV === "development" ? true : false,
   // middleware: (getDefaultMiddleware) => getDefaultMiddleware({
   //   serializableCheck: false
   // }) ,
