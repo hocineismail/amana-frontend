@@ -259,15 +259,6 @@ export default function Charge({ onCloseModel }: Props) {
           refName + "-" + reference
         }`
       );
-      console.log(
-        `Beneficiary name: ${banks[0]?.bank.account_name}\nBank address: ${
-          banks[0]?.bank.bank_address
-        }\nBank name: ${banks[0]?.bank.bank_name}\nIBAN: ${
-          banks[0]?.bank.Iban
-        }\nBIC/SWIFT: ${banks[0]?.bank.bic_swift}\nPayment Reference: ${
-          refName + "-" + reference
-        }`
-      );
     } catch (err) {
       console.error("Failed to copy: ", err);
     }
@@ -520,25 +511,35 @@ export default function Charge({ onCloseModel }: Props) {
                                 >
                                   <ul>
                                     <li>
-                                      <b>Country </b>:{" "}
+                                      <b style={{ fontWeight: "bold" }}>
+                                        Country{" "}
+                                      </b>
+                                      :{" "}
                                       {office
                                         ? office.country
                                         : EUOffices[0]?.offices.country}
                                     </li>
                                     <li>
-                                      <b>City </b>:{" "}
+                                      <b style={{ fontWeight: "bold" }}>
+                                        City{" "}
+                                      </b>
+                                      :{" "}
                                       {office
                                         ? office.city
                                         : EUOffices[0]?.offices.city}
                                     </li>
                                     <li>
-                                      <b>Address: </b>{" "}
+                                      <b style={{ fontWeight: "bold" }}>
+                                        Address:{" "}
+                                      </b>{" "}
                                       {office
                                         ? office.address
                                         : EUOffices[0]?.offices.address}
                                     </li>
                                     <li>
-                                      <b>Phone: </b>
+                                      <b style={{ fontWeight: "bold" }}>
+                                        Phone:{" "}
+                                      </b>
                                       {office
                                         ? office.phone
                                         : EUOffices[0]?.offices.phone}
@@ -603,7 +604,7 @@ export default function Charge({ onCloseModel }: Props) {
                         <div>
                           <ul
                             style={{
-                              fontSize: "14px",
+                              fontSize: "16px",
                               marginTop: "20px",
                               marginBottom: "20px",
                             }}
@@ -616,7 +617,13 @@ export default function Charge({ onCloseModel }: Props) {
                                 borderTopRightRadius: "10px",
                               }}
                             >
-                              Copy All:
+                              <span
+                                style={{
+                                  fontWeight: "bolder",
+                                }}
+                              >
+                                Copy All:
+                              </span>
                               <span
                                 className="tooltip-copy"
                                 onClick={
@@ -655,7 +662,10 @@ export default function Charge({ onCloseModel }: Props) {
                                 padding: "5px",
                               }}
                             >
-                              Beneficiary name: {banks[0]?.bank.account_name}
+                              Beneficiary name: &nbsp;
+                              <span style={{ fontWeight: "normal" }}>
+                                {banks[0]?.bank.account_name}
+                              </span>
                               <span
                                 className="tooltip-copy"
                                 onClick={async () => {
@@ -679,8 +689,10 @@ export default function Charge({ onCloseModel }: Props) {
                                 padding: "5px",
                               }}
                             >
-                              {" "}
-                              Bank address : {banks[0]?.bank.bank_address}{" "}
+                              Bank address: &nbsp;
+                              <span style={{ fontWeight: "normal" }}>
+                                {banks[0]?.bank.bank_address}
+                              </span>
                               <span
                                 className="tooltip-copy"
                                 onClick={async () => {
@@ -704,8 +716,10 @@ export default function Charge({ onCloseModel }: Props) {
                                 padding: "5px",
                               }}
                             >
-                              {" "}
-                              IBAN: {banks[0]?.bank.Iban}
+                              IBAN:&nbsp;
+                              <span style={{ fontWeight: "normal" }}>
+                                {banks[0]?.bank.Iban}
+                              </span>
                               <span
                                 className="tooltip-copy"
                                 onClick={async () => {
@@ -729,7 +743,10 @@ export default function Charge({ onCloseModel }: Props) {
                                 padding: "5px",
                               }}
                             >
-                              Bank name: {banks[0]?.bank.bank_name}
+                              Bank name:&nbsp;
+                              <span style={{ fontWeight: "normal" }}>
+                                {banks[0]?.bank.bank_name}
+                              </span>
                               <span
                                 className="tooltip-copy"
                                 onClick={async () => {
@@ -753,7 +770,10 @@ export default function Charge({ onCloseModel }: Props) {
                                 padding: "5px",
                               }}
                             >
-                              BIC/SWIFT: {banks[0]?.bank.bic_swift}
+                              BIC/SWIFT:&nbsp;
+                              <span style={{ fontWeight: "normal" }}>
+                                {banks[0]?.bank.bic_swift}
+                              </span>
                               <span
                                 className="tooltip-copy"
                                 onClick={async () => {
@@ -781,7 +801,10 @@ export default function Charge({ onCloseModel }: Props) {
                                 borderBottomRightRadius: "10px",
                               }}
                             >
-                              Transfer Reference: {refName + "-" + reference}
+                              Transfer Reference:&nbsp;
+                              <span style={{ fontWeight: "normal" }}>
+                                {refName + "-" + reference}
+                              </span>
                               <span
                                 className="tooltip-copy"
                                 onClick={async () => {

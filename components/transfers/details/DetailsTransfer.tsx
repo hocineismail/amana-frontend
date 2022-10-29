@@ -8,7 +8,7 @@ type Props = {
 
 export default function DetailsTransfer({ item }: Props) {
   if (!item) return <></>;
-  console.log(item);
+
   return (
     <div
       style={{
@@ -94,6 +94,7 @@ export default function DetailsTransfer({ item }: Props) {
           <th className="details-th">Relations:</th>
           <td className="details-td">{item.relation}</td>
         </tr>
+
         {item.type === "Charge" ? (
           <tr className="details-tr">
             <th className="details-th">current country:</th>
@@ -209,6 +210,10 @@ export default function DetailsTransfer({ item }: Props) {
               {item.createdAt?.toDate().toString()}
             </Moment>
           </td>
+        </tr>
+        <tr className="details-tr">
+          <th className="details-th">Notes:</th>
+          <td className="details-td">{item.details}</td>
         </tr>
       </table>
     </div>

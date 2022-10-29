@@ -15,7 +15,7 @@ import Maintanance from "../components/pages/maintanance/Maintanance";
 import Whatsapp from "../components/whatsapp/Whatsapp";
 import "../styles/date.css";
 // import { initializeAppCheck, ReCaptchaV3Provider } from "firebase/app-check";
-// import { app } from "../firebase/firebase";
+import { app } from "../firebase/firebase";
 function MyApp({ Component, pageProps }: AppProps) {
   const [access, setAccess] = React.useState<null | boolean>(null);
   React.useEffect(() => {
@@ -70,7 +70,7 @@ function MyApp({ Component, pageProps }: AppProps) {
       />
       <Provider store={store}>
         {access === null ? (
-          "loading...."
+          <div className="loading">Loading&#8230;</div>
         ) : access === true ? (
           <Component {...pageProps} />
         ) : (

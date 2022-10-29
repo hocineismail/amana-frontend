@@ -17,7 +17,7 @@ export default function Radio({ id, label, checked, onChange }: Props) {
         id={id}
         style={{ position: "relative" }}
         checked={checked}
-        onChange={() => console.log("hello")}
+        // onChange={() => console.log("hello")}
       />
       <label
         className="form-check-label inline-block text-gray-800 radio-label"
