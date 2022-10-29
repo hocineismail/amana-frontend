@@ -392,6 +392,7 @@ export default function AllTransactions({ amountBlocked }: Props) {
                   className="rounded-2xl"
                   style={{
                     margin: "10px",
+                    padding: "333px",
                     height: "70px",
                     borderRadius: "100px",
                   }}
@@ -445,11 +446,8 @@ export default function AllTransactions({ amountBlocked }: Props) {
                         date: item.request?.createdAt?.toDate().toString(),
                       }) ? (
                         <Badge
-                          className={`text-white bg-red 
-                        border border-red
-                          font-bold 
-                        rounded-2xl text-sm px-5 py-2.5
-                        text-center mr-2 mb-2`}
+                          className={`text-white bg-red  border border-red
+                          font-bold rounded-2xl text-sm px-5 py-2.5 text-center mr-2 mb-2`}
                           text={"Canceled"}
                         />
                       ) : (

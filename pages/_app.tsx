@@ -14,22 +14,20 @@ import axios from "axios";
 import Maintanance from "../components/pages/maintanance/Maintanance";
 import Whatsapp from "../components/whatsapp/Whatsapp";
 import "../styles/date.css";
-// import { initializeAppCheck, ReCaptchaV3Provider } from "firebase/app-check";
+import { initializeAppCheck, ReCaptchaV3Provider } from "firebase/app-check";
 import { app } from "../firebase/firebase";
 function MyApp({ Component, pageProps }: AppProps) {
   const [access, setAccess] = React.useState<null | boolean>(null);
   React.useEffect(() => {
     AOS.init();
 
-    // initializeAppCheck(app, {
-    //   provider: new ReCaptchaV3Provider(
-    //     "6LfWTssgAAAAAKTxLCgGeZKMtlFluqjjpyL6hAAu"
-    //   ),
+    initializeAppCheck(app, {
+      provider: new ReCaptchaV3Provider(process.env.RECAPTCHA_PUBLIC_KEY || ""),
 
-    //   // Optional argument. If true, the SDK automatically refreshes App Check
-    //   // tokens as needed.
-    //   isTokenAutoRefreshEnabled: true,
-    // });
+      // Optional argument. If true, the SDK automatically refreshes App Check
+      // tokens as needed.
+      isTokenAutoRefreshEnabled: true,
+    });
   }, []);
 
   function checkWebsiteAccess() {
