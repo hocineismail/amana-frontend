@@ -20,14 +20,15 @@ function MyApp({ Component, pageProps }: AppProps) {
   const [access, setAccess] = React.useState<null | boolean>(null);
   React.useEffect(() => {
     AOS.init();
+    if (process.env.RECAPTCHA_PUBLIC_KEY) {
+      initializeAppCheck(app, {
+        provider: new ReCaptchaV3Provider(process.env.RECAPTCHA_PUBLIC_KEY),
 
-    initializeAppCheck(app, {
-      provider: new ReCaptchaV3Provider(process.env.RECAPTCHA_PUBLIC_KEY || ""),
-
-      // Optional argument. If true, the SDK automatically refreshes App Check
-      // tokens as needed.
-      isTokenAutoRefreshEnabled: true,
-    });
+        // Optional argument. If true, the SDK automatically refreshes App Check
+        // tokens as needed.
+        isTokenAutoRefreshEnabled: true,
+      });
+    }
   }, []);
 
   function checkWebsiteAccess() {
