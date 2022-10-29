@@ -77,7 +77,7 @@ export default function Signup({}: Props) {
     state: "",
     province: "",
     address: "",
-    birthday: "",
+    birthday: moment().subtract(18, "years").format("YYYY/MM/DD"),
     password: "",
     confirmPassword: "",
   });
@@ -103,10 +103,10 @@ export default function Signup({}: Props) {
       .then(async (userCredential) => {
         // Signed in
         const user = userCredential.user;
-        console.log(user);
+
         // Create an initial document to update.
         const userRef = doc(db, "users", user.uid);
-        const p = await setDoc(userRef, {
+        await setDoc(userRef, {
           status: "active",
           fullname: form.firstname + " " + form.lastname,
           phone: form.phone,
@@ -119,7 +119,7 @@ export default function Signup({}: Props) {
           amount_blocked: 0,
           createdAt: serverTimestamp(),
         });
-        console.log(p);
+
         const wallet = doc(db, "wallets", user.uid);
         await setDoc(wallet, {
           amount: 0,
