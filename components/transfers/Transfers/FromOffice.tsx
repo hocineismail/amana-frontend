@@ -299,6 +299,7 @@ export default function FromOffice({ step, onGetForm, wallet }: Props) {
             <CurrencyInput
               value={Number(amount.euroWithoutFees).toFixed(2)}
               prefix={"€ "}
+              maxLength={10}
               allowDecimals={true}
               allowNegativeValue={false}
               className={`rounded-2xl mt-3${
@@ -414,6 +415,7 @@ export default function FromOffice({ step, onGetForm, wallet }: Props) {
             <CurrencyInput
               value={Number(amount.dinar).toFixed(2)}
               prefix={"DZD "}
+              maxLength={10}
               allowDecimals={true}
               allowNegativeValue={false}
               className={`rounded-2xl mt-3${

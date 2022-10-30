@@ -277,6 +277,7 @@ export default function HomeDelivery({
               value={Number(amount.euroWithoutFees).toFixed(2)}
               prefix={"€ "}
               allowDecimals={true}
+              maxLength={10}
               allowNegativeValue={false}
               className={`rounded-2xl mt-3   w-full h-12 text-bold text-pink-500 ${
                 amount.dinar < 19999
@@ -435,6 +436,7 @@ export default function HomeDelivery({
             <CurrencyInput
               value={Number(amount.dinar).toFixed(2)}
               prefix={"DZD "}
+              maxLength={10}
               allowDecimals={true}
               allowNegativeValue={false}
               className={`rounded-2xl mt-3   w-full h-12 text-bold text-pink-500 ${
