@@ -52,7 +52,11 @@ function MyApp({ Component, pageProps }: AppProps) {
   return (
     <React.Fragment>
       <Head>
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta name="theme-color" content="#002b48" />
+        <meta
+          name="viewport"
+          content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+        />
         <meta httpEquiv="Content-Type" content="text/html; charset=utf-8" />
         <meta name="author" content="amanatransfers" />
         <meta
@@ -64,20 +68,16 @@ function MyApp({ Component, pageProps }: AppProps) {
         <link rel="shortcut icon" href="/logo192.png" />
         <link rel="icon" href="/favicon.ico" />
         <link rel="apple-touch-icon" href="/logo192.png" />
-        <meta
-          name="viewport"
-          content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
-        />
-        <meta name="theme-color" content="#002b48" />
+
         <meta property="og:site_name" content="amanatransfers" />
         <meta property="og:title" content="Amana transfers" />
         <meta
           property="og:description"
           content="Amana Transfers is the fastest, cheapest and most secure way of sending money to your loved ones in Algeria."
         />
-
         <meta property="og:url" content={url} />
-        <meta property="og:type" content="services" />
+        <meta property="og:type" content="Website" />
+        <meta property="og:image" content="/images/logo footer white.png" />
         <meta
           name="keywords"
           content="Algeria
