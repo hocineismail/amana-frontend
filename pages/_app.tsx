@@ -77,7 +77,10 @@ function MyApp({ Component, pageProps }: AppProps) {
         />
         <meta property="og:url" content={url} />
         <meta property="og:type" content="Website" />
-        <meta property="og:image" content="/images/logo footer white.png" />
+        <meta
+          property="og:image"
+          content="https://amanatransfers.com/images/logo footer white.png"
+        />
         <meta
           name="keywords"
           content="Algeria
