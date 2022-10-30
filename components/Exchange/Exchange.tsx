@@ -10,8 +10,8 @@ import { onGetExchange } from "../../actions/actions";
 import { getCurrentcyFormat } from "../../utils/getCurrencyFormat";
 
 interface IMoney {
-  moneyEuro: number;
-  moneyDinar: number;
+  moneyEuro: number | undefined;
+  moneyDinar: number | undefined;
 }
 export default function Exchange() {
   const [Exchange, setExchange] = React.useState<IMoney | any>({
@@ -42,21 +42,21 @@ export default function Exchange() {
       });
     } else {
       setExchange({
-        moneyEuro: value,
-        moneyDinar: value,
+        moneyEuro: "",
+        moneyDinar: "",
       });
     }
   };
   const handleChangeEuro = (value: any) => {
-    if (value) {
+    if (value >= 0) {
       setExchange({
         moneyEuro: value,
         moneyDinar: value * Number(exchange?.amount),
       });
     } else {
       setExchange({
-        moneyEuro: value,
-        moneyDinar: value,
+        moneyEuro: "",
+        moneyDinar: "",
       });
     }
   };
@@ -77,10 +77,10 @@ export default function Exchange() {
             id="input-example"
             className="rounded-2xl mt-3   w-full h-12 text-bold text-pink-500"
             name="input-name"
-            placeholder="You send "
-            defaultValue={1}
+            placeholder="You send"
             decimalsLimit={2}
             allowDecimals={true}
+            allowNegativeValue={false}
             groupSeparator=" "
             decimalSeparator="."
             maxLength={10}
@@ -124,7 +124,6 @@ export default function Exchange() {
             className="rounded-2xl mt-3   w-full h-12  text-pink-500"
             name="input-name"
             placeholder="Reciever gets"
-            defaultValue={1}
             decimalsLimit={2}
             allowDecimals={true}
             groupSeparator=" "
