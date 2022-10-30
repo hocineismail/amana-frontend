@@ -55,7 +55,7 @@ export default function Exchange() {
       });
     } else {
       setExchange({
-        moneyEuro: value,
+        moneyEuro: 1,
         moneyDinar: Number(exchange?.amount),
       });
     }
@@ -81,9 +81,8 @@ export default function Exchange() {
             defaultValue={1}
             decimalsLimit={2}
             allowDecimals={true}
-            groupSeparator=","
+            groupSeparator=" "
             decimalSeparator="."
-            fixedDecimalLength={2}
             maxLength={10}
             // fixedDecimalLength={2}
             prefix="€ "
@@ -128,7 +127,7 @@ export default function Exchange() {
             defaultValue={1}
             decimalsLimit={2}
             allowDecimals={true}
-            groupSeparator=","
+            groupSeparator=" "
             decimalSeparator="."
             maxLength={10}
             prefix="DZD  "
