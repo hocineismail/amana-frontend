@@ -7,6 +7,7 @@ type Props = {
 };
 
 export default function DetailsTransfer({ item }: Props) {
+  console.log(item);
   if (!item) return <></>;
 
   return (
@@ -23,9 +24,10 @@ export default function DetailsTransfer({ item }: Props) {
         <div
           style={{ fontWeight: "bold", margin: "20px 0px", fontSize: "19px" }}
         >
-          {item.method === "Delivery"
+          Receiver details
+          {/* {item.method === "Delivery"
             ? "Deflivery Details"
-            : " Clients Details"}
+            : "Receiver's details"} */}
         </div>
       ) : null}
       <table className="details-table">
@@ -69,7 +71,7 @@ export default function DetailsTransfer({ item }: Props) {
         ) : null}
       </table>
       <div style={{ fontWeight: "bold", margin: "20px 0px", fontSize: "19px" }}>
-        <h2>Details Transfer</h2>
+        <h2>Transfers details</h2>
       </div>
       <table className="details-table">
         {item.method === "Baridi Mob" ? (

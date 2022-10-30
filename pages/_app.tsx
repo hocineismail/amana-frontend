@@ -18,6 +18,7 @@ import { initializeAppCheck, ReCaptchaV3Provider } from "firebase/app-check";
 import { app } from "../firebase/firebase";
 function MyApp({ Component, pageProps }: AppProps) {
   const [access, setAccess] = React.useState<null | boolean>(null);
+  const [url, seturl] = React.useState<string>("");
   React.useEffect(() => {
     AOS.init();
     if (process.env.RECAPTCHA_PUBLIC_KEY) {
@@ -29,6 +30,7 @@ function MyApp({ Component, pageProps }: AppProps) {
         isTokenAutoRefreshEnabled: true,
       });
     }
+    seturl(window.location.href);
   }, []);
 
   function checkWebsiteAccess() {
@@ -52,12 +54,42 @@ function MyApp({ Component, pageProps }: AppProps) {
       <Head>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <meta httpEquiv="Content-Type" content="text/html; charset=utf-8" />
-        <meta name="author" content="ASTLAS" />
+        <meta name="author" content="amanatransfers" />
         <meta
           name="description"
-          content="Amana Transfers is a subdivision of CNG Global Services LTD, a UK based company that also holds offices in France & Algeria.
-          Amana Transfers is the fastest, cheapest and most secure way of sending money to your loved ones in Algeria ."
+          content="Amana Transfers is the fastest, cheapest and most secure way of sending money to your loved ones in Algeria."
         />
+
+        {/* <meta charset="utf-8" /> */}
+        <link rel="shortcut icon" href="/logo192.png" />
+        <link rel="icon" href="/favicon.ico" />
+        <link rel="apple-touch-icon" href="/logo192.png" />
+        <meta
+          name="viewport"
+          content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+        />
+        <meta name="theme-color" content="#002b48" />
+        <meta property="og:site_name" content="amanatransfers" />
+        <meta property="og:title" content="Amana transfers" />
+        <meta
+          property="og:description"
+          content="Amana Transfers is the fastest, cheapest and most secure way of sending money to your loved ones in Algeria."
+        />
+
+        <meta property="og:url" content={url} />
+        <meta property="og:type" content="services" />
+        <meta
+          name="keywords"
+          content="Algeria
+          ,Send money to Algeria
+          ,Transfer money
+          ,Transfer money to Algeria
+          ,Money transfer
+          ,Amana
+          ,Amana transfers
+          ,Algerian poste"
+        />
+        <link rel="manifest" href="/manifest.json" />
         <Script src="https://www.google.com/recaptcha/api.js" async />
       </Head>
       <NextNProgress

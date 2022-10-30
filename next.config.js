@@ -14,6 +14,7 @@ const nextConfig = {
     MEASUREMENT_ID: process.env.MEASUREMENT_ID,
     RECAPTCHA_PUBLIC_KEY: process.env.RECAPTCHA_PUBLIC_KEY,
     API: process.env.API,
+    DEV: process.env.DEV,
   },
 };
 

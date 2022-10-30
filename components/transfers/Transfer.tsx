@@ -33,6 +33,8 @@ import { useAppDispatch, useAppSelector } from "../../hooks/useReduxHook";
 import { onGetFees } from "../../actions/actions";
 import { globalState } from "../../features/globalSlice";
 import { checkAvailablityTransaction } from "../../utils/checkAvailablityTransaction";
+import { userState } from "../../features/userSlice";
+import useCurrentUser from "../../hooks/useCurrentUser";
 
 interface IMoney {
   moneyEuro: number;
@@ -79,11 +81,17 @@ export default function Transfer({
   const [data, setdata] = React.useState<any>();
   const [disabled, setdisabled] = React.useState<boolean>(true);
 
-  const [amount, setAmount] = React.useState<Number>(0);
   const [method, setMethod] = React.useState<null | string>(null);
   const { currentUser } = useFirebaseAuth();
   const { firstFetchFees } = useAppSelector(globalState);
+  const { getFullDetails } = useCurrentUser();
+  const { userDetails } = useAppSelector(userState);
 
+  React.useEffect(() => {
+    if (!!currentUser || !userDetails) {
+      getFullDetails();
+    }
+  }, [currentUser]);
   React.useEffect(() => {
     if (firstFetchFees) {
       dispatch(onGetFees());
@@ -99,7 +107,7 @@ export default function Transfer({
     setdisabled(
       e.isValid || validationCCPpayment({ data: e, step: Number(step) - 1 })
     );
-    setAmount(Number(e.amount));
+    //  setAmount(Number(e.amount));
     let fullname = e.firstname ? e.firstname + " " + e.lastname : "";
     setReqestMoney({
       method: e.method,
@@ -114,7 +122,7 @@ export default function Transfer({
       exchange_fees: e.total_fee,
       description: `Transfer to ${
         e.firstname + " " + e.lastname
-      } with ${getCurrentcyFormat({
+      } of ${getCurrentcyFormat({
         currency: "EUR",
         amount: e.amount,
       })} - Versment ccp`,
@@ -138,7 +146,7 @@ export default function Transfer({
             exchange_fees: e.total_fee,
             description: `Transfer to ${
               RIP_FIXED + e.RIP
-            } with ${getCurrentcyFormat({
+            } of ${getCurrentcyFormat({
               currency: "EUR",
               amount: e.amount,
             })} - Baridi mob`,
@@ -149,7 +157,7 @@ export default function Transfer({
           step: Number(step) - 1,
         })
     );
-    setAmount(Number(e.amount));
+    //setAmount(Number(e.amount));
     setReqestMoney({
       method: "Baridi Mob",
       phone_number: e.phone,
@@ -158,7 +166,7 @@ export default function Transfer({
       },
       exchange: exchange?.amount,
       exchange_fees: e.total_fee,
-      description: `Transfer to ${RIP_FIXED + e.RIP} with ${getCurrentcyFormat({
+      description: `Transfer to ${RIP_FIXED + e.RIP} of ${getCurrentcyFormat({
         currency: "EUR",
         amount: e.amount,
       })} - Baridi mob`,
@@ -174,7 +182,7 @@ export default function Transfer({
 
     setdata(e);
     let fullname = e.firstname ? e.firstname + " " + e.lastname : "";
-    setAmount(Number(e.amount));
+    // setAmount(Number(e.amount));
 
     setReqestMoney({
       method: e.method,
@@ -185,7 +193,7 @@ export default function Transfer({
       exchange_fees: e.total_fee,
       description: `Transfer to ${
         e.firstname + " " + e.lastname
-      } with ${getCurrentcyFormat({
+      } of ${getCurrentcyFormat({
         currency: "EUR",
         amount: e.amount,
       })} -In Office`,
@@ -198,7 +206,7 @@ export default function Transfer({
   const onSubmitCardLess = async (e: any) => {
     setdisabled(validationCardLess({ data: e, step: Number(step) - 1 }));
     setdata(e);
-    setAmount(Number(e.amount));
+    // setAmount(Number(e.amount));
     setReqestMoney({
       method: e.method,
       fullname: e.firstname + " " + e.lastname,
@@ -207,7 +215,7 @@ export default function Transfer({
       exchange_fees: e.total_fee,
       description: `Transfer to ${
         e.firstname + " " + e.lastname
-      } with ${getCurrentcyFormat({
+      } of ${getCurrentcyFormat({
         currency: "EUR",
         amount: e.amount,
       })} - Retrait Sans Carte`,
@@ -221,7 +229,7 @@ export default function Transfer({
       e.isValid || validationMoneyOrder({ data: e, step: Number(step) - 1 })
     );
     setdata(e);
-    setAmount(Number(e.amount));
+    // setAmount(Number(e.amount));
     setReqestMoney({
       method: e.method,
       fullname: e.firstname + " " + e.lastname,
@@ -230,7 +238,7 @@ export default function Transfer({
       exchange_fees: e.total_fee,
       description: `Transfer to ${
         e.firstname + " " + e.lastname
-      } with ${getCurrentcyFormat({
+      } of ${getCurrentcyFormat({
         currency: "EUR",
         amount: e.amount,
       })} - Mondat Algérie Poste`,
@@ -252,7 +260,7 @@ export default function Transfer({
     //   exchange_fees: e.total_fee,
     //   description: `Transfer to ${
     //     e.firstname + " " + e.lastname
-    //   } with ${getCurrentcyFormat({
+    //   } of ${getCurrentcyFormat({
     //     currency: "EUR",
     //     amount: e.amount,
     //   })} - Delivery `,
@@ -262,6 +270,7 @@ export default function Transfer({
     //   details: e.details,
     // });
   };
+
   const onSubmit = async () => {
     const colRef = collection(db, "requests");
 
@@ -270,6 +279,7 @@ export default function Transfer({
         ? validationCCPpayment({
             data: {
               ...reqestMoney,
+
               userId: currentUser.uid,
               type: "Transfer",
               status: "Awaiting",
@@ -306,6 +316,7 @@ export default function Transfer({
       addDoc(colRef, {
         ...reqestMoney,
         userId: currentUser.uid,
+        sender: userDetails.fullname,
         type: "Transfer",
         status: "Awaiting",
         createdAt: serverTimestamp(),
