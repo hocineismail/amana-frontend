@@ -274,6 +274,7 @@ export default function FromOffice({ step, onGetForm, wallet }: Props) {
         <PlaceholderTransaction />
       </div>
     );
+
   return (
     <div>
       {step === 1 ? (
@@ -297,7 +298,7 @@ export default function FromOffice({ step, onGetForm, wallet }: Props) {
           <div className="mt-2 mb-2">
             <label className="font-bold text-black">You send</label>
             <CurrencyInput
-              value={Number(amount.euroWithoutFees).toFixed(2)}
+              value={amount.euroWithoutFees}
               prefix={"€ "}
               maxLength={10}
               allowDecimals={true}
@@ -413,7 +414,7 @@ export default function FromOffice({ step, onGetForm, wallet }: Props) {
           <div className="mt-2 mb-2">
             <label className="font-bold text-black">Receiver gets</label>
             <CurrencyInput
-              value={Number(amount.dinar).toFixed(2)}
+              value={amount.dinar}
               prefix={"DZD "}
               maxLength={10}
               allowDecimals={true}

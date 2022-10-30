@@ -34,6 +34,32 @@ export default function Exchange() {
     }
   }, [exchange]);
 
+  const handleChangeDinnar = (value: any) => {
+    if (value) {
+      setExchange({
+        moneyEuro: value / Number(exchange?.amount) || 1,
+        moneyDinar: value,
+      });
+    } else {
+      setExchange({
+        moneyEuro: 1,
+        moneyDinar: Number(exchange?.amount),
+      });
+    }
+  };
+  const handleChangeEuro = (value: any) => {
+    if (value) {
+      setExchange({
+        moneyEuro: value,
+        moneyDinar: value * Number(exchange?.amount),
+      });
+    } else {
+      setExchange({
+        moneyEuro: value,
+        moneyDinar: Number(exchange?.amount),
+      });
+    }
+  };
   return (
     <div className="flex mx-auto flex-wrap justify-between ">
       <div
@@ -52,26 +78,17 @@ export default function Exchange() {
             className="rounded-2xl mt-3   w-full h-12 text-bold text-pink-500"
             name="input-name"
             placeholder="Please enter a number"
-            defaultValue={1.0}
+            defaultValue={1}
+            decimalsLimit={2}
+            allowDecimals={true}
+            groupSeparator=","
+            decimalSeparator="."
+            fixedDecimalLength={2}
+            maxLength={10}
             // fixedDecimalLength={2}
             prefix="€ "
-            maxLength={1000}
-            value={Exchange.moneyEuro.toFixed(2)}
-            onValueChange={(value, name) => {
-              if (value) {
-                let newCurrencty =
-                  Number(value) < 1000000 ? Number(value) : 1000000;
-                setExchange({
-                  moneyEuro: newCurrencty,
-                  moneyDinar: newCurrencty * Number(exchange?.amount || 1),
-                });
-              } else {
-                setExchange({
-                  moneyEuro: Number(0),
-                  moneyDinar: Number(0) * Number(exchange?.amount || 1),
-                });
-              }
-            }}
+            value={Exchange.moneyEuro}
+            onValueChange={handleChangeEuro}
             // onValueChange={(value, name) => console.log(value, name)}
           />
 
@@ -109,27 +126,14 @@ export default function Exchange() {
             name="input-name"
             placeholder="Please enter a number"
             defaultValue={1}
-            // groupSeparator=","
-            // decimalSeparator="."
-
-            fixedDecimalLength={2}
+            decimalsLimit={2}
+            allowDecimals={true}
+            groupSeparator=","
+            decimalSeparator="."
+            maxLength={10}
             prefix="DZD  "
-            value={Number(Exchange.moneyDinar).toFixed(2)}
-            onValueChange={(value, name) => {
-              if (value !== undefined) {
-                let max = 1000000 * Number(exchange?.amount || 1);
-                let currency = Number(value) < max ? Number(value) : max;
-                setExchange({
-                  moneyEuro: currency / Number(exchange?.amount || 1),
-                  moneyDinar: value,
-                });
-              } else {
-                setExchange({
-                  moneyEuro: Number(0) / Number(exchange?.amount || 1),
-                  moneyDinar: Number(0),
-                });
-              }
-            }}
+            value={Exchange.moneyDinar}
+            onValueChange={handleChangeDinnar}
           />
         </div>
 
