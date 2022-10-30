@@ -71,7 +71,7 @@ export default function DetailsTransfer({ item }: Props) {
         ) : null}
       </table>
       <div style={{ fontWeight: "bold", margin: "20px 0px", fontSize: "19px" }}>
-        <h2>Transfers details</h2>
+        <h2>Transfer details</h2>
       </div>
       <table className="details-table">
         {item.method === "Baridi Mob" ? (

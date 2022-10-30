@@ -8,7 +8,7 @@ export default function index() {
   return (
     <>
       <Head>
-        <title>Amana transfers | Privacy Policy</title>
+        <title> Amana - أمانة | Privacy Policy</title>
       </Head>
       <Layout>
         <Container>

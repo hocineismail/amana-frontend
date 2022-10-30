@@ -141,7 +141,7 @@ export default function Login({}: Props) {
   return (
     <>
       <Head>
-        <title> Login | Amana transfers </title>
+        <title> Login | Amana - أمانة </title>
       </Head>
       <Layout>
         <div

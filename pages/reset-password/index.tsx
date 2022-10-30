@@ -140,7 +140,7 @@ export default function Login() {
   return (
     <>
       <Head>
-        <title> Reset Passowrd | Asmana transferts </title>
+        <title> Reset Passowrd | Amana - أمانة </title>
       </Head>
       <Layout>
         <div

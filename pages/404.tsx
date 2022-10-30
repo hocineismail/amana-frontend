@@ -1,3 +1,4 @@
+import Head from "next/head";
 import Image from "next/image";
 import React from "react";
 import Layout from "../components/layout/Layout";
@@ -6,15 +7,21 @@ type Props = {};
 
 export default function index({}: Props) {
   return (
-    <Layout>
-      <div
-        style={{ height: "70vh" }}
-        className=" justify-center container  mx-auto  hidden md:flex"
-      >
-        <div style={{ maxWidth: "450px", width: "100%", margin: "auto" }}>
-          <Image src={notFoundImage} alt="not found  illistration" />
+    <>
+      <Head>
+        <title>Amana - أمانة | Page not found</title>
+      </Head>
+
+      <Layout>
+        <div
+          style={{ height: "70vh" }}
+          className=" justify-center container  mx-auto  hidden md:flex"
+        >
+          <div style={{ maxWidth: "450px", width: "100%", margin: "auto" }}>
+            <Image src={notFoundImage} alt="not found  illistration" />
+          </div>
         </div>
-      </div>
-    </Layout>
+      </Layout>
+    </>
   );
 }

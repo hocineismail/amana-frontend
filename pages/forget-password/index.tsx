@@ -131,7 +131,7 @@ export default function Login() {
   return (
     <>
       <Head>
-        <title> Forget password | Asmana transferts </title>
+        <title> Forget password | Amana - أمانة </title>
       </Head>
       <Layout>
         <div

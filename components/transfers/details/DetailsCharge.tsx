@@ -45,7 +45,7 @@ export default function DetailsCharge({ item }: Props) {
         </tr>
       </table>
       <div style={{ fontWeight: "bold", margin: "20px 0px", fontSize: "19px" }}>
-        <h2>Transfers details</h2>
+        <h2>Transfer details</h2>
       </div>
       <table className="details-table">
         <tr className="details-tr">

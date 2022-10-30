@@ -9,13 +9,12 @@ export default function Home() {
   return (
     <>
       <Head>
-        <title>Amana transfers | Home page</title>
+        <title>Amana - أمانة</title>
       </Head>
       <main>
         <HeaderHome />
         <WhyShooseIWallet />
         {/* <ClientOpinion /> */}
-
         <Menu />
       </main>
       <Footer />

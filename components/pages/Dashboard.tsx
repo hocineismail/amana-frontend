@@ -11,6 +11,7 @@ import {
   onGetAmountAvailable,
   onGetAmountBlocked,
 } from "../../actions/actions";
+import Head from "next/head";
 
 type Props = {};
 
@@ -25,19 +26,24 @@ export default function Dashboard({}: Props) {
   }, [dispatch, firstFetch]);
 
   return (
-    <Layout>
-      <>
-        <Wallet
-          amount={
-            Number(wallet.amountAvailable) - Number(wallet.amountBlock) || 0
-          }
-          amountBlocked={wallet.amountBlock || 0}
-        />
-        <Container>
-          <Switcher />
-          <Transactions amountBlocked={wallet.amountBlock || 0} />
-        </Container>
-      </>
-    </Layout>
+    <>
+      <Head>
+        <title>Amana - أمانة</title>
+      </Head>
+      <Layout>
+        <>
+          <Wallet
+            amount={
+              Number(wallet.amountAvailable) - Number(wallet.amountBlock) || 0
+            }
+            amountBlocked={wallet.amountBlock || 0}
+          />
+          <Container>
+            <Switcher />
+            <Transactions amountBlocked={wallet.amountBlock || 0} />
+          </Container>
+        </>
+      </Layout>
+    </>
   );
 }
