@@ -8,7 +8,8 @@ export default function HeaderHome() {
     <div
       style={{
         backgroundSize: "cover",
-        backgroundImage: `linear-gradient(rgba(0, 43, 73, 53%),rgba(0, 43, 73, 53%)), url("images/photo-1580519542036-c47de6196ba5.jpeg"), linear-gradient(rgba(0, 43, 73, 53%), rgba(0, 43, 73, 53%))`,
+        backgroundPosition: "center right",
+        backgroundImage: `linear-gradient(rgba(0, 43, 73, 53%),rgba(0, 43, 73, 53%)), url("images/background.jpeg"), linear-gradient(rgba(0, 43, 73, 53%), rgba(0, 43, 73, 53%))`,
       }}
     >
       <Navbar />
