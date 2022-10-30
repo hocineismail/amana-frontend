@@ -380,10 +380,15 @@ export default function Charge({ onCloseModel }: Props) {
                                 You’re adding
                               </label>
                               <CurrencyInput
-                                value={Number(Exchange.moneyEuro).toFixed(2)}
+                                value={Exchange.moneyEuro}
                                 prefix={"€ "}
+                                placeholder="You send"
+                                decimalsLimit={2}
                                 allowDecimals={true}
                                 allowNegativeValue={false}
+                                groupSeparator=" "
+                                decimalSeparator="."
+                                maxLength={10}
                                 className={`rounded-2xl mt-3${
                                   error.error ? " border-red" : ""
                                 }  w-full h-12 text-bold text-pink-500`}
@@ -412,7 +417,7 @@ export default function Charge({ onCloseModel }: Props) {
                                   setinit(false);
                                   setExchange({
                                     ...Exchange,
-                                    moneyEuro: Number(value || 0),
+                                    moneyEuro: value,
                                   });
                                 }}
                               />
