@@ -42,8 +42,8 @@ export default function Exchange() {
       });
     } else {
       setExchange({
-        moneyEuro: 1,
-        moneyDinar: Number(exchange?.amount),
+        moneyEuro: value,
+        moneyDinar: value,
       });
     }
   };
@@ -55,8 +55,8 @@ export default function Exchange() {
       });
     } else {
       setExchange({
-        moneyEuro: 1,
-        moneyDinar: Number(exchange?.amount),
+        moneyEuro: value,
+        moneyDinar: value,
       });
     }
   };
@@ -77,7 +77,7 @@ export default function Exchange() {
             id="input-example"
             className="rounded-2xl mt-3   w-full h-12 text-bold text-pink-500"
             name="input-name"
-            placeholder="Please enter a number"
+            placeholder="You send "
             defaultValue={1}
             decimalsLimit={2}
             allowDecimals={true}
@@ -123,7 +123,7 @@ export default function Exchange() {
             id="input-example"
             className="rounded-2xl mt-3   w-full h-12  text-pink-500"
             name="input-name"
-            placeholder="Please enter a number"
+            placeholder="Reciever gets"
             defaultValue={1}
             decimalsLimit={2}
             allowDecimals={true}
