@@ -323,7 +323,6 @@ export default function MoneyOrder({ step, onGetForm, wallet }: Props) {
                       }}
                     />
                   </div>
-                  DZD
                   {getCurrentcyFormat({
                     currency: "DZD",
                     amount: exchange?.amount || 0,
