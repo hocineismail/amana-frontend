@@ -452,7 +452,7 @@ export default function Charge({ onCloseModel }: Props) {
                                   name="country"
                                   id="country"
                                   className="rounded-2xl mt-3   w-full h-12 text-bold text-pink-500"
-                                  onClick={(e) => {
+                                  onChange={(e) => {
                                     setform({
                                       ...form,
                                       country:
@@ -483,7 +483,7 @@ export default function Charge({ onCloseModel }: Props) {
                                   name="country"
                                   id="country"
                                   className="rounded-2xl mt-3   w-full h-12 text-bold text-pink-500"
-                                  onClick={(e) => {
+                                  onChange={(e) => {
                                     setoffice(
                                       EUOffices[(e.target as any).value]
                                         ?.offices
