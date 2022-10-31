@@ -503,8 +503,9 @@ export default function MoneyOrder({ step, onGetForm, wallet }: Props) {
                   name="phone"
                   maxLength={9}
                   minLength={9}
+                  inputMode="numeric"
                   required
-                  placeholder="664 466 466"
+                  placeholder="666 666 666"
                   value={request.phone}
                   onBlur={(e) => {
                     onChangeForm(e);

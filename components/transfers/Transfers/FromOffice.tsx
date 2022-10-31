@@ -45,7 +45,7 @@ export default function FromOffice({ step, onGetForm, wallet }: Props) {
     dinar: 1,
     dinarWithoutFees: 1,
   });
-  const { exchange, DZOffices, fees, firstFetchFees, firstFetchEUOffices } =
+  const { exchange, DZOffices, fees, firstFetchFees, firstFetchDZOffices } =
     useAppSelector(globalState);
 
   const dispatch = useAppDispatch();
@@ -53,10 +53,10 @@ export default function FromOffice({ step, onGetForm, wallet }: Props) {
     if (firstFetchFees) {
       dispatch(onGetFees());
     }
-    if (firstFetchEUOffices) {
+    if (firstFetchDZOffices) {
       dispatch(onGetOffices({ country: "Algeria" }));
     }
-  }, [firstFetchFees, firstFetchEUOffices]);
+  }, [firstFetchFees, firstFetchDZOffices]);
 
   React.useEffect(() => {
     if (exchange?.amount && !fees[0]?.preFees) {
@@ -106,7 +106,7 @@ export default function FromOffice({ step, onGetForm, wallet }: Props) {
       maxAmount:
         (200000 - Number(getFeeAmana(100000))) * Number(exchange?.amount),
     });
-    console.log("isValid euro" + isValid.error);
+
     setError(isValid);
     if (value) {
       onGetForm({
@@ -160,7 +160,6 @@ export default function FromOffice({ step, onGetForm, wallet }: Props) {
       maxAmount: 200000,
       minAmount: 1000,
     });
-    console.log("isValid dzd" + isValid.error);
 
     setError(isValid);
     if (value) {
@@ -193,13 +192,13 @@ export default function FromOffice({ step, onGetForm, wallet }: Props) {
     } else {
       onGetForm({
         ...request,
-        isValid: isValid?.error,
+        isValid: true,
         amount: 0,
         total_fee: 0,
       });
       setRequest({
         ...request,
-        isValid: isValid?.error,
+        isValid: true,
         amount: 0,
         total_fee: 0,
       });
@@ -354,9 +353,13 @@ export default function FromOffice({ step, onGetForm, wallet }: Props) {
             <CurrencyInput
               value={amount.euroWithoutFees}
               prefix={"€ "}
-              maxLength={10}
+              decimalsLimit={2}
+              placeholder="You send"
               allowDecimals={true}
               allowNegativeValue={false}
+              groupSeparator=" "
+              decimalSeparator="."
+              maxLength={7}
               className={`rounded-2xl mt-3${
                 error.error ? " border-red focus:border-red border-2" : ""
               }  w-full h-12 text-bold text-pink-500`}
@@ -470,20 +473,21 @@ export default function FromOffice({ step, onGetForm, wallet }: Props) {
             <CurrencyInput
               value={amount.dinar}
               prefix={"DZD "}
-              maxLength={10}
+              decimalsLimit={2}
+              placeholder="Receiver gets"
               allowDecimals={true}
               allowNegativeValue={false}
+              groupSeparator=" "
+              decimalSeparator="."
+              maxLength={9}
               className={`rounded-2xl mt-3${
                 error.error ? " border-red focus:border-red border-2" : ""
               }  w-full h-12 text-bold text-pink-500`}
               onValueChange={(value: any) => {
                 // formattedValue = $2,223
                 // value ie, 2223
-                if (value) {
-                  onChangeDinar(value);
-                } else {
-                  onChangeEuro(1);
-                }
+
+                onChangeDinar(value);
               }}
             />{" "}
             {error.error ? (
@@ -584,8 +588,9 @@ export default function FromOffice({ step, onGetForm, wallet }: Props) {
                   name="phone"
                   maxLength={9}
                   minLength={9}
+                  inputMode="numeric"
                   required
-                  placeholder="664 466 466"
+                  placeholder="666 666 666"
                   value={request.phone}
                   onBlur={(e) => {
                     onChangeForm(e);

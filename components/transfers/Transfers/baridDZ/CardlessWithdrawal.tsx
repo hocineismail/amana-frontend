@@ -16,8 +16,10 @@ import { useAppDispatch, useAppSelector } from "../../../../hooks/useReduxHook";
 import { globalState } from "../../../../features/globalSlice";
 import { onGetFees } from "../../../../actions/actions";
 import { getMaxSelectAmount } from "../../../../utils/getMaxSelectAmount";
-import { AMOUNT_SELECTED } from "../../../../constants/constants";
+import { AMOUNT_SELECTED, CCP } from "../../../../constants/constants";
 import PlaceholderTransaction from "../../../placeholder/PlaceholderTransaction";
+import { getEuroFromDZD } from "../../../../utils/calculator";
+import { isValidAmountTransferCCP } from "../../../../helpers/validationAmount";
 type Props = {
   step: number;
   wallet: number;
@@ -42,6 +44,7 @@ export default function CardlessWithdrawal({ step, onGetForm, wallet }: Props) {
     phone_number: "",
     relation: " ",
     details: "",
+    isValid: false,
   });
   const [amount, setAmount] = React.useState({
     euro: 1,
@@ -56,15 +59,17 @@ export default function CardlessWithdrawal({ step, onGetForm, wallet }: Props) {
     let index = 1;
     let selectOtion = [];
     while (index !== 26) {
-      let fees = setFeeAmana(
-        Number(index * AMOUNT_SELECTED) / Number(exchange?.amount)
-      );
-      let optionValue =
-        Number(index * AMOUNT_SELECTED) / Number(exchange?.amount) +
-        Number(fees);
+      const exchanged = getEuroFromDZD({
+        amount: index * AMOUNT_SELECTED,
+        fees: fees,
+        exchange: exchange?.amount || 1,
+      });
+      console.log(index);
+      console.log(exchanged);
       index++;
+
       selectOtion.push({
-        disabled: optionValue > wallet,
+        disabled: exchanged.amountWithoutFees > wallet,
       });
     }
     return selectOtion;
@@ -88,44 +93,44 @@ export default function CardlessWithdrawal({ step, onGetForm, wallet }: Props) {
         exchange: Number(exchange?.amount),
       }));
 
-      onChangeDinar(2000);
+      onChangeDinar(1);
     }
   }, [exchange, fees, setRequest]);
 
-  const onChangeEuro = (value: number) => {
-    setRequest({
-      ...request,
-      amount: value,
-      total_fee: Number(getFeeAmana(value)),
-    });
-    setAmount({
-      euro: value - Number(getFeeAmana(value)),
-      euroWithoutFees: value,
-      dinar: (value - Number(getFeeAmana(value))) * Number(exchange?.amount),
-      dinarWithoutFees: value * Number(exchange?.amount),
-    });
-  };
   const onChangeDinar = (index: number) => {
     //make validation for max and min
     let value = index * 2000;
-    if (value >= 100000) {
-      value = 2000;
-    }
-    if (value < 2000) {
-      value = 2000;
-    }
-    let fees = setFeeAmana(Number(value) / Number(exchange?.amount));
+    let isValid = isValidAmountTransferCCP({
+      walletAmount: wallet * Number(exchange?.amount),
+      currentAmount: index * 2000,
+      maxAmount: 100000,
+      minAmount: 2000,
+      method: CCP,
+    });
+    const exchanged = getEuroFromDZD({
+      amount: value,
+      fees: fees,
+      exchange: exchange?.amount || 1,
+    });
 
+    onGetForm({
+      ...request,
+      isValid: isValid.error,
+      amount: exchanged.amountWithoutFees,
+      total_fee: exchanged.fees,
+    });
     setRequest({
       ...request,
-      amount: Number(value) / Number(exchange?.amount) + Number(fees),
-      total_fee: Number(fees),
+      isValid: isValid.error,
+      amount: exchanged.amountWithoutFees,
+      total_fee: exchanged.fees,
     });
+
     setAmount({
-      euro: Number(value) / Number(exchange?.amount),
-      euroWithoutFees: Number(value) / Number(exchange?.amount) + Number(fees),
-      dinar: Number(value),
-      dinarWithoutFees: Number(value),
+      euro: exchanged.amountWithoutFees,
+      euroWithoutFees: exchanged.amount,
+      dinar: value,
+      dinarWithoutFees: value,
     });
 
     onGetForm({
@@ -235,11 +240,6 @@ export default function CardlessWithdrawal({ step, onGetForm, wallet }: Props) {
               allowNegativeValue={false}
               disabled
               className="rounded-2xl mt-3   w-full h-12 text-bold text-pink-500"
-              onValueChange={(value: any) => {
-                // formattedValue = $2,223
-                // value ie, 2223
-                onChangeEuro(value || 1);
-              }}
             />
           </div>
           <div style={{ position: "relative", height: "99px" }}>
@@ -453,9 +453,10 @@ export default function CardlessWithdrawal({ step, onGetForm, wallet }: Props) {
                   type="text"
                   name="phone_number"
                   maxLength={9}
+                  inputMode="numeric"
                   minLength={9}
                   required
-                  placeholder="664 466 466"
+                  placeholder="666 666 666"
                   value={request.phone_number}
                   onBlur={(e) => {
                     onChangeForm(e);

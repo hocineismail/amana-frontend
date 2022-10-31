@@ -109,22 +109,8 @@ export default function CCPPayement({ step, onGetForm, wallet }: Props) {
         dinar: Number(
           (Number(value) - Number(getFeeAmana(value))) *
             Number(exchange?.amount)
-        ).toFixed(2),
-        dinarWithoutFees: Number(
-          Number(value) * Number(exchange?.amount)
-        ).toFixed(2),
-      });
-      console.log({
-        euro: value - Number(getFeeAmana(value)),
-        euroWithoutFees: value,
-        dinar: Number(
-          (Number(value) - Number(getFeeAmana(value))) *
-            Number(exchange?.amount)
         ),
-        dinarWithoutFees: Number(
-          Number(value) * Number(exchange?.amount)
-        ).toFixed(2),
-        fees: Number(getFeeAmana(value)),
+        dinarWithoutFees: Number(Number(value) * Number(exchange?.amount)),
       });
     } else {
       onGetForm({
@@ -176,8 +162,7 @@ export default function CCPPayement({ step, onGetForm, wallet }: Props) {
         fees: fees,
         exchange: exchange?.amount || 1,
       });
-      console.log("exchanged");
-      console.log(exchanged);
+
       // let fees = setFeeAmana(Number(value) / Number(exchange?.amount));
       onGetForm({
         ...request,
@@ -243,7 +228,6 @@ export default function CCPPayement({ step, onGetForm, wallet }: Props) {
   }
 
   const onChangeForm = (e: any) => {
-    console.log(request);
     setErrorsFrom({
       ...errorsForm,
       [e.target.name]: null,
@@ -483,7 +467,7 @@ export default function CCPPayement({ step, onGetForm, wallet }: Props) {
             <CurrencyInput
               value={amount.dinar}
               prefix={"DZD "}
-              decimalsLimit={6}
+              decimalsLimit={2}
               placeholder="Receiver gets"
               allowDecimals={true}
               allowNegativeValue={false}
@@ -680,8 +664,9 @@ export default function CCPPayement({ step, onGetForm, wallet }: Props) {
                   name="phone"
                   maxLength={9}
                   minLength={9}
+                  inputMode="numeric"
                   required
-                  placeholder="664 444 444"
+                  placeholder="666 666 666"
                   value={request.phone}
                   onBlur={(e) => {
                     onChangeForm(e);

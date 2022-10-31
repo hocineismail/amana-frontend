@@ -53,6 +53,7 @@ function MyApp({ Component, pageProps }: AppProps) {
     <React.Fragment>
       <Head>
         <meta name="theme-color" content="#002b48" />
+
         <meta
           name="viewport"
           content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"

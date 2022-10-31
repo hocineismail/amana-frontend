@@ -87,6 +87,7 @@ export default function Signup({}: Props) {
     setErrors({ ...errors, [event.target.name]: null });
   };
   const nextStep = () => {
+    (window as any).scrollTo(0, 0);
     if (step === 1) {
       signup();
     } else {
@@ -339,6 +340,7 @@ export default function Signup({}: Props) {
                         <div className="customDatePickerWidth  mb-5">
                           <DatePicker
                             value={value}
+                            editable={false}
                             minDate="1900/01/01"
                             maxDate={moment()
                               .subtract(18, "years")

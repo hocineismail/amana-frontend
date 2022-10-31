@@ -23,28 +23,32 @@ interface IGETFEES {
   }
 export const getEuroFromDZD = ({ amount, fees, exchange }: IERUOFROMDINAR): any => {
   amount = amount / exchange;
+ 
   for (let i = 0; i < fees.length; i++) {
     if (fees[i].fees.type === "fix") {
-      let euroWithFees = amount + financial(Number(fees[i].fees.fee));
+      
+      let euroWithFees = financial(amount +  Number(fees[i].fees.fee)) ;
+      
       if (
-        euroWithFees >= fees[i].fees.min_price &&
-        euroWithFees <= fees[i].fees.max_price
+        euroWithFees >= Number(fees[i].fees.min_price) &&
+        euroWithFees <= Number(fees[i].fees.max_price)
       ) {
+       
         return {
-            fees: financial(Number(fees[i].fees.fee)),
+            fees:  Number(fees[i].fees.fee ),
             amountWithoutFees: amount,
-            amount: financial(euroWithFees)
+            amount: euroWithFees 
         }
       }
     } else {
       let restFees = 100 - Number(fees[i].fees.fee);
-      let euroWithFees =
-        amount + (Number(fees[i].fees.fee) * amount) / restFees;
-
+      let euroWithFees = financial( amount + (Number(fees[i].fees.fee) * amount) / restFees)
+      
       if (
-        euroWithFees >= fees[i].fees.min_price &&
-        euroWithFees <= fees[i].fees.max_price
+        euroWithFees >= Number(fees[i].fees.min_price) &&
+        euroWithFees <= Number(fees[i].fees.max_price)
       ) {
+        console.log(fees[i].fees.min_price + " < "+ euroWithFees + " < "+ fees[i].fees.max_price)
         return {
             fees:  Number(fees[i].fees.fee) / 100 ,
             amountWithoutFees: amount,
