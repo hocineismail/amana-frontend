@@ -17,6 +17,7 @@ import { globalState } from "../../../features/globalSlice";
 import { onGetFees, onGetOffices } from "../../../actions/actions";
 import { isValidAmountTransferBARIDIMOB } from "../../../helpers/validationAmount";
 import PlaceholderTransaction from "../../placeholder/PlaceholderTransaction";
+import { getEuroFromDZD } from "../../../utils/calculator";
 type Props = {
   step: number;
   wallet: number;
@@ -36,10 +37,11 @@ export default function FromOffice({ step, onGetForm, wallet }: Props) {
     relation: "",
     details: "",
     office: "",
+    isValid: true,
   });
-  const [amount, setAmount] = React.useState({
-    euro: 1,
-    euroWithoutFees: 1,
+  const [amount, setAmount] = React.useState<any>({
+    euro: 1.0,
+    euroWithoutFees: 1.0,
     dinar: 1,
     dinarWithoutFees: 1,
   });
@@ -95,67 +97,119 @@ export default function FromOffice({ step, onGetForm, wallet }: Props) {
     error: false,
     msg: "",
   });
-  const onChangeEuro = (value: number) => {
-    let amountValue = value;
+  const onChangeEuro = (value: any) => {
     let isValid = isValidAmountTransferBARIDIMOB({
       walletAmount: wallet * Number(exchange?.amount),
       currentAmount:
-        (amountValue - Number(getFeeAmana(amountValue))) *
-        Number(exchange?.amount),
+        (value - Number(getFeeAmana(value))) * Number(exchange?.amount),
       minAmount: 1000,
       maxAmount:
         (200000 - Number(getFeeAmana(100000))) * Number(exchange?.amount),
     });
+    console.log("isValid euro" + isValid.error);
     setError(isValid);
+    if (value) {
+      onGetForm({
+        ...request,
+        isValid: isValid?.error,
+        amount: value,
+        total_fee: Number(getFeeAmana(value)),
+      });
+      setRequest({
+        ...request,
+        isValid: isValid?.error,
+        amount: value,
+        total_fee: Number(getFeeAmana(value)),
+      });
+      setAmount({
+        euro: value - Number(getFeeAmana(value)),
+        euroWithoutFees: value,
+        dinar: Number(
+          (Number(value) - Number(getFeeAmana(value))) *
+            Number(exchange?.amount)
+        ),
+        dinarWithoutFees: Number(Number(value) * Number(exchange?.amount)),
+      });
+    } else {
+      onGetForm({
+        ...request,
+        isValid: isValid?.error,
+        amount: 0,
+        total_fee: 0,
+      });
 
-    // f({
-    //   ...request,
-    //   isValid: isValid?.error,
-    //   amount: amountValue,
-    //   total_fee: Number(getFeeAmana(amountValue)),
-    // });
-    setRequest({
-      ...request,
-      amount: amountValue,
-      total_fee: Number(getFeeAmana(amountValue)),
-    });
-    setAmount({
-      euro: amountValue - Number(getFeeAmana(amountValue)),
-      euroWithoutFees: amountValue,
-      dinar:
-        (amountValue - Number(getFeeAmana(amountValue))) *
-        Number(exchange?.amount),
-      dinarWithoutFees: amountValue * Number(exchange?.amount),
-    });
+      setRequest({
+        ...request,
+        isValid: isValid?.error,
+        amount: 0,
+        total_fee: 0,
+      });
+
+      setAmount({
+        euro: "",
+        euroWithoutFees: "",
+        dinar: "",
+        dinarWithoutFees: "",
+      });
+    }
   };
-  const onChangeDinar = (value: Number) => {
-    let fees = setFeeAmana(Number(value) / Number(exchange?.amount));
+  const onChangeDinar = (value: any) => {
     let isValid = isValidAmountTransferBARIDIMOB({
       walletAmount: wallet * Number(exchange?.amount),
-      currentAmount: Number(value),
+      currentAmount: value,
       maxAmount: 200000,
       minAmount: 1000,
     });
+    console.log("isValid dzd" + isValid.error);
 
     setError(isValid);
-    onGetForm({
-      ...request,
-      isValid: isValid.error,
-      amount: Number(value) / Number(exchange?.amount) + Number(fees),
-      total_fee: Number(fees),
-    });
+    if (value) {
+      const exchanged = getEuroFromDZD({
+        amount: value,
+        fees: fees,
+        exchange: exchange?.amount || 1,
+      });
 
-    setRequest({
-      ...request,
-      amount: Number(value) / Number(exchange?.amount) + Number(fees),
-      total_fee: Number(fees),
-    });
-    setAmount({
-      euro: Number(value) / Number(exchange?.amount),
-      euroWithoutFees: Number(value) / Number(exchange?.amount) + Number(fees),
-      dinar: Number(value),
-      dinarWithoutFees: Number(value),
-    });
+      // let fees = setFeeAmana(Number(value) / Number(exchange?.amount));
+      onGetForm({
+        ...request,
+        isValid: isValid.error,
+        amount: exchanged.amountWithoutFees,
+        total_fee: exchanged.fees,
+      });
+      setRequest({
+        ...request,
+        isValid: isValid.error,
+        amount: exchanged.amountWithoutFees,
+        total_fee: exchanged.fees,
+      });
+
+      setAmount({
+        euro: exchanged.amountWithoutFees,
+        euroWithoutFees: exchanged.amount,
+        dinar: value,
+        dinarWithoutFees: value,
+      });
+    } else {
+      onGetForm({
+        ...request,
+        isValid: isValid?.error,
+        amount: 0,
+        total_fee: 0,
+      });
+      setRequest({
+        ...request,
+        isValid: isValid?.error,
+        amount: 0,
+        total_fee: 0,
+      });
+      setAmount({
+        euro: "",
+        euroWithoutFees: "",
+        dinar: "",
+        dinarWithoutFees: "",
+      });
+    }
   };
   function getFeeAmana(amount: number) {
     for (let i = 0; i < fees.length; i++) {

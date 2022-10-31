@@ -149,13 +149,13 @@ export default function HomeDelivery({
   function getFeeAmana(amount: number) {
     for (let i = 0; i < fees.length; i++) {
       if (
-        amount >= fees[i].fees.min_price &&
-        amount <= fees[i].fees.max_price
+        amount >= fees[i].fees?.min_price &&
+        amount <= fees[i].fees?.max_price
       ) {
         if (fees[i].fees.type === "fix") {
-          return financial(Number(fees[i].fees.fee));
+          return Number(fees[i].fees.fee);
         } else {
-          return financial((amount * Number(fees[i].fees.fee)) / 100);
+          return (amount * Number(fees[i].fees.fee)) / 100;
         }
       }
     }
@@ -169,9 +169,9 @@ export default function HomeDelivery({
         euroWithFees <= reversed[i].fees.max_price
       ) {
         if (fees[i].fees.type === "fix") {
-          return financial(Number(reversed[i].fees.fee));
+          return Number(reversed[i].fees.fee);
         } else {
-          return financial((amount * Number(reversed[i].fees.fee)) / 100);
+          return (amount * Number(reversed[i].fees.fee)) / 100;
         }
       }
     }

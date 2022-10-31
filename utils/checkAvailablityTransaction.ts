@@ -3,10 +3,8 @@ import { BARIDIMOB, CARDLESS, CCP, DELIVERY, MONEY_ORDER, IN_OFFICE } from "../c
 export function checkAvailablityTransaction (method: string, wallet: number, amountEuro: number,
      amountDz: number) {
  
-//    console.log(`%c ${method}`, "background: #222; color: #bada55")
-//    console.log(`%c ${wallet}`, "background: #222; color: #bada55")
-//    console.log(`%c ${amountEuro}`, "background: #222; color: #bada55")
-//    console.log(`%c ${amountDz}`, "background: #222; color: #bada55")
+ 
+   console.log(`%c ${amountDz}`, "background: #222; color: #bada55")
     if (wallet < amountEuro) {
         return true
     }

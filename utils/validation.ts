@@ -30,37 +30,37 @@ export function validationCCPpayment({
   step,
   general,
 }: IValidationCCPpayment) {
-  let isErrorFounded = false;
+  let isError = false;
   if (step === 0) {
-    if (!validator.isLength(data?.firstname, { min: 3, max: 50 })) {
-      isErrorFounded = true;
+    if (!validator.isLength(data?.firstname, { min: 3, max: 20 })) {
+      isError = true;
     }
-    if (!validator.isLength(data?.lastname, { min: 3, max: 50 })) {
-      isErrorFounded = true;
+    if (!validator.isLength(data?.lastname, { min: 3, max: 20 })) {
+      isError = true;
     }
     if (!validator.isLength(data?.address, { min: 5, max: 250 })) {
-      isErrorFounded = true;
+      isError = true;
     }
   }
   if (step === 1) {
     var pattern = /^\d+$/;
-    const patternPhone = /[^\d]/;
-    console.log(data);
+    // const patternPhone = /[^\d]/;
+ 
     if (
       !validator.isLength(data?.ccp?.toString() || "", { min: 6, max: 14 }) ||
       !pattern.test(data?.ccp || "")
     ) {
-      isErrorFounded = true;
+      isError = true;
     }
 
     if (
       !validator.isLength(data?.key?.toString() || "", { min: 2, max: 2 }) ||
       !pattern.test(data?.key || "")
     ) {
-      isErrorFounded = true;
+      isError = true;
     }
     if (!validator.isLength(data?.phone?.toString() || "", { min: 9, max: 9 })) {
-      isErrorFounded = true;
+      isError = true;
     }
     if (
       !validator.isLength(data?.relation.toString() || "", {
@@ -68,7 +68,7 @@ export function validationCCPpayment({
         max: 1500,
       })
     ) {
-      isErrorFounded = true;
+      isError = true;
     }
   }
   if (general) {
@@ -82,7 +82,7 @@ export function validationCCPpayment({
       }) ||
       !pattern.test(data?.target_ccp?.ccp)
     ) {
-      isErrorFounded = true;
+      isError = true;
     }
     if (
       !validator.isLength(data?.target_ccp.key.toString() || "", {
@@ -91,16 +91,16 @@ export function validationCCPpayment({
       }) ||
       !pattern.test(data?.target_ccp?.key)
     ) {
-      isErrorFounded = true;
+      isError = true;
     }
     if (data?.type !== "Transfer") {
-      isErrorFounded = true;
+      isError = true;
     }
     if (data?.userId !== localStorage.getItem("userId")) {
-      isErrorFounded = true;
+      isError = true;
     }
     if (data?.status !== "Awaiting") {
-      isErrorFounded = true;
+      isError = true;
     }
     if (
       !validator.isLength(data?.phone_number?.toString() || "", {
@@ -108,7 +108,7 @@ export function validationCCPpayment({
         max: 9,
       })
     ) {
-      isErrorFounded = true;
+      isError = true;
     }
     if (
       !validator.isLength(data?.relation.toString() || "", {
@@ -116,17 +116,17 @@ export function validationCCPpayment({
         max: 1500,
       })
     ) {
-      isErrorFounded = true;
+      isError = true;
     }
     if (!validator.isLength(data?.fullname, { min: 6, max: 250 })) {
-      isErrorFounded = true;
+      isError = true;
     }
 
     if (!validator.isLength(data?.address, { min: 5, max: 250 })) {
-      isErrorFounded = true;
+      isError = true;
     }
   }
-  return isErrorFounded;
+  return isError;
 }
 
 export function validationMoneyOrder({
@@ -134,21 +134,21 @@ export function validationMoneyOrder({
   step,
   general,
 }: IValidationCCPpayment) {
-  let isErrorFounded = false;
+  let isError = false;
   if (step === 0) {
     if (!validator.isLength(data?.firstname, { min: 3, max: 50 })) {
-      isErrorFounded = true;
+      isError = true;
     }
     if (!validator.isLength(data?.lastname, { min: 3, max: 50 })) {
-      isErrorFounded = true;
+      isError = true;
     }
     if (!validator.isLength(data?.address, { min: 5, max: 250 })) {
-      isErrorFounded = true;
+      isError = true;
     }
   }
   if (step === 1) {
     if (!validator.isLength(data?.phone?.toString() || "", { min: 9, max: 9 })) {
-      isErrorFounded = true;
+      isError = true;
     }
     if (
       !validator.isLength(data?.relation.toString() || "", {
@@ -156,7 +156,7 @@ export function validationMoneyOrder({
         max: 1500,
       })
     ) {
-      isErrorFounded = true;
+      isError = true;
     }
   }
   if (general) {
@@ -164,13 +164,13 @@ export function validationMoneyOrder({
     // const patternPhone = /[^\d]/;
 
     if (data?.type !== "Transfer") {
-      isErrorFounded = true;
+      isError = true;
     }
     if (data?.userId !== localStorage.getItem("userId")) {
-      isErrorFounded = true;
+      isError = true;
     }
     if (data?.status !== "Awaiting") {
-      isErrorFounded = true;
+      isError = true;
     }
     if (
       !validator.isLength(data?.phone_number?.toString() || "", {
@@ -178,7 +178,7 @@ export function validationMoneyOrder({
         max: 9,
       })
     ) {
-      isErrorFounded = true;
+      isError = true;
     }
     if (
       !validator.isLength(data?.relation.toString() || "", {
@@ -186,40 +186,40 @@ export function validationMoneyOrder({
         max: 1500,
       })
     ) {
-      isErrorFounded = true;
+      isError = true;
     }
     if (!validator.isLength(data?.fullname, { min: 6, max: 250 })) {
-      isErrorFounded = true;
+      isError = true;
     }
 
     if (!validator.isLength(data?.address, { min: 5, max: 250 })) {
-      isErrorFounded = true;
+      isError = true;
     }
   }
-  return isErrorFounded;
+  return isError;
 }
 export function validationCardLess({
   data,
   step,
   general,
 }: IValidationCCPpayment) {
-  let isErrorFounded = false;
+  let isError = false;
  console.log('data')
  console.log(data)
   if (step === 1) {
  
     if (!validator.isLength(data?.firstname||"", { min: 3, max: 50 })) {
      
-      isErrorFounded = true;
+      isError = true;
     }
     if (!validator.isLength(data?.lastname||"", { min: 3, max: 50 })) {
    
-      isErrorFounded = true;
+      isError = true;
     }
   
     if (!validator.isLength(data?.phone_number?.toString()   || "" , { min: 9, max: 9 })) {
       
-      isErrorFounded = true;
+      isError = true;
     }
     if (
       !validator.isLength(data?.relation.toString() || "", {
@@ -227,7 +227,7 @@ export function validationCardLess({
         max: 500,
       })
     ) {
-      isErrorFounded = true;
+      isError = true;
     }
   }
   if (general) {
@@ -235,13 +235,13 @@ export function validationCardLess({
     // const patternPhone = /[^\d]/;
 
     if (data?.type !== "Transfer") {
-      isErrorFounded = true;
+      isError = true;
     }
     if (data?.userId !== localStorage.getItem("userId")) {
-      isErrorFounded = true;
+      isError = true;
     }
     if (data?.status !== "Awaiting") {
-      isErrorFounded = true;
+      isError = true;
     }
     if (
       !validator.isLength(data?.phone_number?.toString() || "", {
@@ -249,7 +249,7 @@ export function validationCardLess({
         max: 9,
       })
     ) {
-      isErrorFounded = true;
+      isError = true;
     }
     if (
       !validator.isLength(data?.relation.toString() || "", {
@@ -257,13 +257,13 @@ export function validationCardLess({
         max: 500,
       })
     ) {
-      isErrorFounded = true;
+      isError = true;
     }
     if (!validator.isLength(data?.fullname, { min: 3, max: 250 })) {
-      isErrorFounded = true;
+      isError = true;
     }
   }
-  return isErrorFounded;
+  return isError;
 }
 
 export function validationBaridimob({
@@ -271,18 +271,18 @@ export function validationBaridimob({
   step,
   general,
 }: IValidationBaridi) {
-  let isErrorFounded = false;
+  let isError = false;
   if (general) {
     var pattern = /^\d+$/;
     const numberConst = data?.target_baridiMob?.RIP.substring(0, 7);
     if (data?.type !== "Transfer") {
-      isErrorFounded = true;
+      isError = true;
     }
     if (data?.userId !== localStorage.getItem("userId")) {
-      isErrorFounded = true;
+      isError = true;
     }
     if (data?.status !== "Awaiting") {
-      isErrorFounded = true;
+      isError = true;
     }
 
     if (
@@ -293,7 +293,7 @@ export function validationBaridimob({
       }) ||
       numberConst.toString() !== RIP_FIXED.toString()
     ) {
-      isErrorFounded = true;
+      isError = true;
     }
 
     if (
@@ -302,7 +302,7 @@ export function validationBaridimob({
         max: 1500,
       })
     ) {
-      isErrorFounded = true;
+      isError = true;
     }
   }
   if (step === 1) {
@@ -320,7 +320,7 @@ export function validationBaridimob({
       }) ||
       numberConst.toString() !== RIP_FIXED.toString()
     ) {
-      isErrorFounded = true;
+      isError = true;
     }
     if (
       !validator.isLength(data?.relation?.toString() || "", {
@@ -328,22 +328,22 @@ export function validationBaridimob({
         max: 1500,
       })
     ) {
-      isErrorFounded = true;
+      isError = true;
     }
   }
 
-  return isErrorFounded;
+  return isError;
 }
 export function validationFromOffice({
   data,
   step,
   general,
 }: IValidationCCPpayment) {
-  let isErrorFounded = false;
-  console.log(data)
+  let isError = false;
+  
   if (step === 0) {
     if (!validator.isLength(data?.office, { min: 3, max: 50 })) {
-      isErrorFounded = true;
+      isError = true;
     }
   }
   let phone = data?.phone_number || data?.phone
@@ -353,29 +353,29 @@ export function validationFromOffice({
     if (data?.fullname) {
   
       if (!validator.isLength(data?.fullname||"", { min: 3, max: 50 })) {
-        console.log("hena fullname")
-        isErrorFounded = true;
+      
+        isError = true;
       } 
     } else {
-      console.log("hena firstname")
+   
       if (!validator.isLength(data?.firstname||"", { min: 3, max: 50 })) {
-        isErrorFounded = true;
+        isError = true;
       }
       if (!validator.isLength(data?.lastname||"",  { min: 3, max: 50 })) {
-        isErrorFounded = true;
+        isError = true;
       } 
     }
 
     if (!validator.isLength(phone || "" , { min: 9, max: 9 })) {
        
-      isErrorFounded = true;
+      isError = true;
     }
     if (!validator.isLength(data?.relation.toString() || "", {
         min:2,
         max: 1500,
       })
-    ) { console.log(data?.relation)
-      isErrorFounded = true;
+    ) {  
+      isError = true;
     }
   }
   if (general) {
@@ -383,13 +383,13 @@ export function validationFromOffice({
     // const patternPhone = /[^\d]/;
 
     if (data?.type !== "Transfer") {
-      isErrorFounded = true;
+      isError = true;
     }
     if (data?.userId !== localStorage.getItem("userId")) {
-      isErrorFounded = true;
+      isError = true;
     }
     if (data?.status !== "Awaiting") {
-      isErrorFounded = true;
+      isError = true;
     }
     if (
       !validator.isLength(data?.phone_number?.toString() || "", {
@@ -397,7 +397,7 @@ export function validationFromOffice({
         max: 9,
       })
     ) {
-      isErrorFounded = true;
+      isError = true;
     }
     if (
       !validator.isLength(data?.relation?.toString() || "", {
@@ -405,13 +405,13 @@ export function validationFromOffice({
         max: 1500,
       })
     ) {
-      isErrorFounded = true;
+      isError = true;
     }
     if (!validator.isLength(data?.fullname, { min: 6, max: 250 })) {
-      isErrorFounded = true;
+      isError = true;
     }
   }
-  return isErrorFounded;
+  return isError;
 }
 
 export function validationDelivery({
@@ -420,24 +420,24 @@ export function validationDelivery({
     general,
   }: IValidationCCPpayment) {
  
-    let isErrorFounded = false;
+    let isError = false;
     let phone = data?.phone_number || data?.phone
     if (step === 0) {
       if (!validator.isLength(data?.firstname|| "", { min: 3, max: 50 })) {
-        isErrorFounded = true;
+        isError = true;
       }
       if (!validator.isLength(data?.lastname|| "", { min: 3, max: 50 })) {
-        isErrorFounded = true;
+        isError = true;
       }
       if (!validator.isLength(data?.address|| "", { min: 5, max: 250 })) {
-        isErrorFounded = true;
+        isError = true;
       }
     }
     if (step === 1) {
       var pattern = /^\d+$/;
       const patternPhone = /[^\d]/; 
       if (!validator.isLength(phone?.toString() || "", { min: 9, max: 9 })) {
-        isErrorFounded = true;
+        isError = true;
       }
       if (
         !validator.isLength(data?.relation.toString() || "", {
@@ -445,7 +445,7 @@ export function validationDelivery({
           max: 1500,
         })
       ) {
-        isErrorFounded = true;
+        isError = true;
       }
     }
     if (general) {
@@ -453,13 +453,13 @@ export function validationDelivery({
       // const patternPhone = /[^\d]/; 
       
       if (data?.type !== "Transfer") {
-        isErrorFounded = true;
+        isError = true;
       }
       if (data?.userId !== localStorage.getItem("userId")) {
-        isErrorFounded = true;
+        isError = true;
       }
       if (data?.status !== "Awaiting") {
-        isErrorFounded = true;
+        isError = true;
       }
       if (
         !validator.isLength(phone?.toString() || "", {
@@ -467,7 +467,7 @@ export function validationDelivery({
           max: 9,
         })
       ) {
-        isErrorFounded = true;
+        isError = true;
       }
       if (
         !validator.isLength(data?.relation.toString() || "", {
@@ -475,17 +475,17 @@ export function validationDelivery({
           max: 1500,
         })
       ) {
-        isErrorFounded = true;
+        isError = true;
       }
       if (!validator.isLength(data?.fullname, { min: 6, max: 250 })) {
-        isErrorFounded = true;
+        isError = true;
       }
   
       if (!validator.isLength(data?.address, { min: 5, max: 250 })) {
-        isErrorFounded = true;
+        isError = true;
       }
     }
-    return isErrorFounded;
+    return isError;
   }
 
 export function validationPassword(password: string)  {

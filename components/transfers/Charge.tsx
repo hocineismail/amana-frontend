@@ -382,7 +382,7 @@ export default function Charge({ onCloseModel }: Props) {
                               <CurrencyInput
                                 value={Exchange.moneyEuro}
                                 prefix={"€ "}
-                                placeholder="You send"
+                                placeholder="You’re adding"
                                 decimalsLimit={2}
                                 allowDecimals={true}
                                 allowNegativeValue={false}

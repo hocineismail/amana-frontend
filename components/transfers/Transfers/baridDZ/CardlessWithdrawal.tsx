@@ -137,20 +137,19 @@ export default function CardlessWithdrawal({ step, onGetForm, wallet }: Props) {
   function getFeeAmana(amount: number) {
     for (let i = 0; i < fees.length; i++) {
       if (
-        amount >= fees[i].fees.min_price &&
-        amount <= fees[i].fees.max_price
+        amount >= fees[i].fees?.min_price &&
+        amount <= fees[i].fees?.max_price
       ) {
         if (fees[i].fees.type === "fix") {
-          return financial(Number(fees[i].fees.fee));
+          return Number(fees[i].fees.fee);
         } else {
-          return financial((amount * Number(fees[i].fees.fee)) / 100);
+          return (amount * Number(fees[i].fees.fee)) / 100;
         }
       }
     }
   }
   function setFeeAmana(amount: number) {
     let reversed = fees || [];
-
     for (let i = 0; i < reversed.length; i++) {
       let euroWithFees = amount + Number(reversed[i].fees.fee);
       if (
@@ -158,14 +157,13 @@ export default function CardlessWithdrawal({ step, onGetForm, wallet }: Props) {
         euroWithFees <= reversed[i].fees.max_price
       ) {
         if (fees[i].fees.type === "fix") {
-          return financial(Number(reversed[i].fees.fee));
+          return Number(reversed[i].fees.fee);
         } else {
-          return financial((amount * Number(reversed[i].fees.fee)) / 100);
+          return (amount * Number(reversed[i].fees.fee)) / 100;
         }
       }
     }
   }
-
   const onChangeForm = (e: any) => {
     setErrorsFrom({
       ...errorsForm,

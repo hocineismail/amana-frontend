@@ -1,3 +1,4 @@
+import { Alert } from "react-bootstrap";
 import { ICurrency } from "../typings/types";
 
 export function getCurrentcyFormat ({currency, amount}: ICurrency) {
@@ -15,5 +16,6 @@ export function getCurrentcyFormat ({currency, amount}: ICurrency) {
 }
 
 export function financial(x: number) {
+ 
   return parseFloat(Number(x.toString()).toFixed(2));
 }

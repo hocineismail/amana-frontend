@@ -554,29 +554,28 @@ export default function Transfer({
                         <button
                           onClick={() => nextStep()}
                           disabled={
-                            wallet < 5 ||
-                            disabled ||
-                            checkAvailablityTransaction(
-                              method || "",
-                              wallet,
-                              reqestMoney?.amount,
-                              (reqestMoney?.amount -
-                                reqestMoney?.exchange_fees) *
-                                Number(exchange?.amount || 1)
-                            )
+                            wallet < 5 || disabled
+                            // checkAvailablityTransaction(
+                            //   method || "",
+                            //   wallet,
+                            //   reqestMoney?.amount,
+                            //   (reqestMoney?.amount -
+                            //     reqestMoney?.exchange_fees) *
+                            //     Number(exchange?.amount || 1)
+                            // )
                           }
                           className={`w-[70%] mt-2 pl-10 pr-10 
                         fw-400  ${
-                          wallet < 5 ||
-                          disabled ||
-                          checkAvailablityTransaction(
-                            method || "",
-                            wallet,
-                            reqestMoney?.amount,
-                            (reqestMoney?.amount - reqestMoney?.exchange_fees) *
-                              Number(exchange?.amount || 1)
-                          )
-                            ? "text-black bg-gray cursor-not-allowed hover:bg-gray dark:hover:bg-gray border border-gray"
+                          wallet < 5 || disabled
+                            ? // ||
+                              // checkAvailablityTransaction(
+                              //   method || "",
+                              //   wallet,
+                              //   reqestMoney?.amount,
+                              //   (reqestMoney?.amount - reqestMoney?.exchange_fees) *
+                              //     Number(exchange?.amount || 1)
+                              // )
+                              "text-black bg-gray cursor-not-allowed hover:bg-gray dark:hover:bg-gray border border-gray"
                             : "text-white  bg-blue hover:bg-blue dark:hover:bg-blue  border border-blue"
                         }
                          h-12

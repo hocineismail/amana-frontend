@@ -16,7 +16,6 @@ export function isValidAmount({
   minAmount,
 }: IValidationAmount) {
   if (type === CHARGE) {
-    console.log(type, currentAmount, maxAmount, minAmount);
     if (Number(maxAmount) < Number(currentAmount)) {
       return {
         error: true,
@@ -63,14 +62,8 @@ export function isValidAmountTransferCCP({
   minAmount,
   method,
 }: IValidationAmountTransferCCP): IValidationAmountTransferCCPRETURN {
-  console.log({
-    currentAmount,
-    walletAmount,
-    maxAmount,
-    minAmount,
-    method,
-  });
   if (method === CCP) {
+    console.log({ currentAmount, walletAmount, maxAmount, minAmount, method });
     if (
       Number(maxAmount) <= Number(currentAmount) &&
       walletAmount > currentAmount
@@ -136,6 +129,8 @@ export function isValidAmountTransferBARIDIMOB({
     Number(maxAmount) <= Number(currentAmount) &&
     walletAmount > currentAmount
   ) {
+    console.log({ currentAmount, walletAmount, maxAmount, minAmount });
+
     return {
       error: true,
       msg: `The maximum Transfer is  ${getCurrentcyFormat({

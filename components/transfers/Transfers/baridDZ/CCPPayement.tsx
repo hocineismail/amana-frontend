@@ -22,6 +22,7 @@ import {
   // MIN_AMOUNT_CCP_DZ
 } from "../../../../constants/constants";
 import PlaceholderTransaction from "../../../placeholder/PlaceholderTransaction";
+import { getEuroFromDZD } from "../../../../utils/calculator";
 
 type Props = {
   step: number;
@@ -49,7 +50,7 @@ export default function CCPPayement({ step, onGetForm, wallet }: Props) {
     error: false,
     msg: "",
   });
-  const [amount, setAmount] = React.useState({
+  const [amount, setAmount] = React.useState<any>({
     euro: 1,
     euroWithoutFees: 1,
     dinar: 1,
@@ -76,46 +77,80 @@ export default function CCPPayement({ step, onGetForm, wallet }: Props) {
     }
   }, [exchange, fees, setRequest]);
 
-  const onChangeEuro = (value: number) => {
-    let amountValue = value;
+  const onChangeEuro = (value: any) => {
+    // value = value ? parseFloat(value).toFixed(2) : value;
+
     let isValid = isValidAmountTransferCCP({
       walletAmount: wallet * Number(exchange?.amount),
       currentAmount:
-        (amountValue - Number(getFeeAmana(amountValue))) *
-        Number(exchange?.amount),
+        (value - Number(getFeeAmana(value))) * Number(exchange?.amount),
       minAmount: 1000,
       maxAmount: (2001 - Number(getFeeAmana(2001))) * Number(exchange?.amount),
       method: CCP,
     });
-    console.log(isValid);
 
     setError(isValid);
-    onGetForm({
-      ...request,
-      isValid: isValid?.error,
-      amount: amountValue,
-      total_fee: financial(Number(getFeeAmana(amountValue))),
-    });
-    setRequest({
-      ...request,
-      isValid: isValid?.error,
-      amount: amountValue,
-      total_fee: financial(Number(getFeeAmana(amountValue))),
-    });
+    if (value) {
+      onGetForm({
+        ...request,
+        isValid: isValid?.error,
+        amount: value,
+        total_fee: Number(getFeeAmana(value)),
+      });
+      setRequest({
+        ...request,
+        isValid: isValid?.error,
+        amount: value,
+        total_fee: Number(getFeeAmana(value)),
+      });
+      setAmount({
+        euro: value - Number(getFeeAmana(value)),
+        euroWithoutFees: value,
+        dinar: Number(
+          (Number(value) - Number(getFeeAmana(value))) *
+            Number(exchange?.amount)
+        ).toFixed(2),
+        dinarWithoutFees: Number(
+          Number(value) * Number(exchange?.amount)
+        ).toFixed(2),
+      });
+      console.log({
+        euro: value - Number(getFeeAmana(value)),
+        euroWithoutFees: value,
+        dinar: Number(
+          (Number(value) - Number(getFeeAmana(value))) *
+            Number(exchange?.amount)
+        ),
+        dinarWithoutFees: Number(
+          Number(value) * Number(exchange?.amount)
+        ).toFixed(2),
+        fees: Number(getFeeAmana(value)),
+      });
+    } else {
+      onGetForm({
+        ...request,
+        isValid: isValid?.error,
+        amount: 0,
+        total_fee: 0,
+      });
 
-    setAmount({
-      euro: financial(amountValue - Number(getFeeAmana(amountValue))),
-      euroWithoutFees: financial(amountValue),
-      dinar: financial(
-        (amountValue - Number(getFeeAmana(amountValue))) *
-          Number(exchange?.amount)
-      ),
-      dinarWithoutFees: financial(amountValue * Number(exchange?.amount)),
-    });
+      setRequest({
+        ...request,
+        isValid: isValid?.error,
+        amount: 0,
+        total_fee: 0,
+      });
+
+      setAmount({
+        euro: "",
+        euroWithoutFees: "",
+        dinar: "",
+        dinarWithoutFees: "",
+      });
+    }
   };
-  const onChangeDinar = (value: Number) => {
-    let fees = setFeeAmana(Number(value) / Number(exchange?.amount));
-
+  const onChangeDinar = (value: any) => {
+    // value = value ? parseFloat(value).toFixed(2) : value;
     // if (
     //   value === 1000 &&
     //   Number(value) / Number(exchange?.amount) + Number(fees) > wallet
@@ -128,38 +163,66 @@ export default function CCPPayement({ step, onGetForm, wallet }: Props) {
     // } else {
     let isValid = isValidAmountTransferCCP({
       walletAmount: wallet * Number(exchange?.amount),
-      currentAmount: Number(value),
+      currentAmount: Number(value) || 0,
       maxAmount: 2000 * Number(exchange?.amount),
       minAmount: 1000,
       method: CCP,
     });
-    if (Number(value) / Number(exchange?.amount) + Number(fees) >= 1000001) {
-    } else {
-      setError(isValid);
+
+    setError(isValid);
+    if (value) {
+      const exchanged = getEuroFromDZD({
+        amount: value,
+        fees: fees,
+        exchange: exchange?.amount || 1,
+      });
+      console.log("exchanged");
+      console.log(exchanged);
+      // let fees = setFeeAmana(Number(value) / Number(exchange?.amount));
       onGetForm({
         ...request,
         isValid: isValid.error,
-        amount: Number(value) / Number(exchange?.amount) + Number(fees),
-        total_fee: Number(fees),
+        amount: exchanged.amountWithoutFees,
+        total_fee: exchanged.fees,
       });
       setRequest({
         ...request,
         isValid: isValid.error,
-        amount: financial(
-          Number(value) / Number(exchange?.amount) + Number(fees)
-        ),
-        total_fee: financial(Number(fees)),
+        amount: exchanged.amountWithoutFees,
+        total_fee: exchanged.fees,
       });
 
       setAmount({
-        euro: financial(Number(value) / Number(exchange?.amount)),
-        euroWithoutFees: financial(
-          Number(value) / Number(exchange?.amount) + Number(fees)
-        ),
-        dinar: financial(Number(value)),
-        dinarWithoutFees: financial(Number(value)),
+        euro: exchanged.amountWithoutFees,
+        euroWithoutFees: exchanged.amount,
+        dinar: value,
+        dinarWithoutFees: value,
+      });
+    } else {
+      onGetForm({
+        ...request,
+        isValid: isValid?.error,
+        amount: 0,
+        total_fee: 0,
+      });
+      setRequest({
+        ...request,
+        isValid: isValid?.error,
+        amount: 0,
+        total_fee: 0,
+      });
+      setAmount({
+        euro: "",
+        euroWithoutFees: "",
+        dinar: "",
+        dinarWithoutFees: "",
       });
     }
+
+    // if (Number(value) / Number(exchange?.amount) + Number(fees) >= 1000001) {
+    // } else {
+
+    // }
 
     // }
   };
@@ -167,8 +230,8 @@ export default function CCPPayement({ step, onGetForm, wallet }: Props) {
   function getFeeAmana(amount: number) {
     for (let i = 0; i < fees.length; i++) {
       if (
-        amount >= fees[i].fees?.min_price &&
-        amount <= fees[i].fees?.max_price
+        amount >= fees[i].fees.min_price &&
+        amount <= fees[i].fees.max_price
       ) {
         if (fees[i].fees.type === "fix") {
           return financial(Number(fees[i].fees.fee));
@@ -178,24 +241,9 @@ export default function CCPPayement({ step, onGetForm, wallet }: Props) {
       }
     }
   }
-  function setFeeAmana(amount: number) {
-    let reversed = fees || [];
-    for (let i = 0; i < reversed.length; i++) {
-      let euroWithFees = amount + Number(reversed[i].fees.fee);
-      if (
-        euroWithFees >= reversed[i].fees.min_price &&
-        euroWithFees <= reversed[i].fees.max_price
-      ) {
-        if (fees[i].fees.type === "fix") {
-          return financial(Number(reversed[i].fees.fee));
-        } else {
-          return financial((amount * Number(reversed[i].fees.fee)) / 100);
-        }
-      }
-    }
-  }
 
   const onChangeForm = (e: any) => {
+    console.log(request);
     setErrorsFrom({
       ...errorsForm,
       [e.target.name]: null,
@@ -204,10 +252,10 @@ export default function CCPPayement({ step, onGetForm, wallet }: Props) {
     if (e.target.name === "phone") {
       const currentValuee = e.target.value.replace(/[^\d]/g, "");
       let currentValue = currentValuee.replace(/^0+/, "");
-      setRequest((prevState) => ({
+      setRequest({
         ...request,
         phone: currentValue,
-      }));
+      });
       onGetForm({
         ...request,
         phone: currentValue,
@@ -315,16 +363,20 @@ export default function CCPPayement({ step, onGetForm, wallet }: Props) {
           <div className="mt-2 mb-2">
             <label className="font-bold text-black"> You send </label>
             <CurrencyInput
-              value={Number(amount.euroWithoutFees).toFixed(2)}
+              value={amount.euroWithoutFees}
               prefix={"€ "}
+              placeholder="You send"
+              decimalsLimit={2}
               allowDecimals={true}
-              maxLength={10}
               allowNegativeValue={false}
+              groupSeparator=" "
+              decimalSeparator="."
+              maxLength={7}
               className={`rounded-2xl mt-3${
                 error.error ? " border-red focus:border-red border-2" : ""
               }  w-full h-12 text-bold text-pink-500`}
               onValueChange={(value: any) => {
-                onChangeEuro(value || 0);
+                onChangeEuro(value);
               }}
             />
           </div>
@@ -356,7 +408,7 @@ export default function CCPPayement({ step, onGetForm, wallet }: Props) {
                   </div>
                   {getCurrentcyFormat({
                     currency: "EUR",
-                    amount: Number(getFeeAmana(amount.euroWithoutFees || 1)),
+                    amount: Number(getFeeAmana(amount.euroWithoutFees || 0)),
                   })}
                   &nbsp; fees
                 </li>
@@ -429,23 +481,20 @@ export default function CCPPayement({ step, onGetForm, wallet }: Props) {
           <div className="mt-2 mb-2">
             <label className="font-bold text-black">Receiver gets</label>
             <CurrencyInput
-              value={Number(amount.dinar).toFixed(2)}
+              value={amount.dinar}
               prefix={"DZD "}
-              maxLength={10}
+              decimalsLimit={6}
+              placeholder="Receiver gets"
               allowDecimals={true}
               allowNegativeValue={false}
+              groupSeparator=" "
+              decimalSeparator="."
+              maxLength={9}
               className={`rounded-2xl mt-3${
                 error.error ? " border-red focus:border-red border-2" : ""
               }  w-full h-12 text-bold text-pink-500`}
               onValueChange={(value: any) => {
-                // formattedValue = $2,223
-                // value ie, 2223
-
-                if (value) {
-                  onChangeDinar(value);
-                } else {
-                  onChangeEuro(1);
-                }
+                onChangeDinar(value);
               }}
             />{" "}
             {error.error ? (
@@ -472,7 +521,7 @@ export default function CCPPayement({ step, onGetForm, wallet }: Props) {
                 onBlur={(e) => {
                   onChangeForm(e);
                   if (
-                    !validator.isLength(e.target.value, { min: 3, max: 50 })
+                    !validator.isLength(e.target.value, { min: 3, max: 15 })
                   ) {
                     setErrorsFrom({
                       ...errorsForm,

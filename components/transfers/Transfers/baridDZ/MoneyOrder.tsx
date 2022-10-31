@@ -17,6 +17,7 @@ import validator from "validator";
 import { onGetFees } from "../../../../actions/actions";
 import { isValidAmountTransferBARIDIMOB } from "../../../../helpers/validationAmount";
 import PlaceholderTransaction from "../../../placeholder/PlaceholderTransaction";
+import { getEuroFromDZD } from "../../../../utils/calculator";
 
 type Props = {
   step: number;
@@ -29,18 +30,18 @@ export default function MoneyOrder({ step, onGetForm, wallet }: Props) {
     firstname: "",
     lastname: "",
     method: "Mondat Algérie Poste",
-    amount: 1,
+    amount: 0,
     exchange: 0,
-    total_fee: 1,
+    total_fee: 0,
     address: "",
     relation: "",
-    ccp: 23,
+    ccp: "",
     key: "",
     phone: "",
     details: "",
     isValid: true,
   });
-  const [amount, setAmount] = React.useState({
+  const [amount, setAmount] = React.useState<any>({
     euro: 1,
     euroWithoutFees: 1,
     dinar: 1,
@@ -70,42 +71,62 @@ export default function MoneyOrder({ step, onGetForm, wallet }: Props) {
     msg: "",
   });
   const onChangeEuro = (value: number) => {
-    let amountValue = value;
     let isValid = isValidAmountTransferBARIDIMOB({
       walletAmount: wallet * Number(exchange?.amount),
       currentAmount:
-        (amountValue - Number(getFeeAmana(amountValue))) *
-        Number(exchange?.amount),
+        (value - Number(getFeeAmana(value))) * Number(exchange?.amount),
       minAmount: 1000,
       maxAmount:
         (200000 - Number(getFeeAmana(100000))) * Number(exchange?.amount),
     });
     setError(isValid);
+    if (value) {
+      onGetForm({
+        ...request,
+        isValid: isValid?.error,
+        amount: value,
+        total_fee: Number(getFeeAmana(value)),
+      });
+      setRequest({
+        ...request,
+        isValid: isValid?.error,
+        amount: value,
+        total_fee: Number(getFeeAmana(value)),
+      });
+      setAmount({
+        euro: value - Number(getFeeAmana(value)),
+        euroWithoutFees: value,
+        dinar: Number(
+          (Number(value) - Number(getFeeAmana(value))) *
+            Number(exchange?.amount)
+        ),
+        dinarWithoutFees: Number(Number(value) * Number(exchange?.amount)),
+      });
+    } else {
+      onGetForm({
+        ...request,
+        isValid: isValid?.error,
+        amount: 0,
+        total_fee: 0,
+      });
 
-    onGetForm({
-      ...request,
-      isValid: isValid?.error,
-      amount: amountValue,
-      total_fee: Number(getFeeAmana(amountValue)),
-    });
-    setRequest({
-      ...request,
-      amount: amountValue,
-      isValid: isValid?.error,
-      total_fee: Number(getFeeAmana(amountValue)),
-    });
-    setAmount({
-      euro: amountValue - Number(getFeeAmana(amountValue)),
-      euroWithoutFees: amountValue,
-      dinar:
-        (amountValue - Number(getFeeAmana(amountValue))) *
-        Number(exchange?.amount),
-      dinarWithoutFees: amountValue * Number(exchange?.amount),
-    });
+      setRequest({
+        ...request,
+        isValid: isValid?.error,
+        amount: 0,
+        total_fee: 0,
+      });
+
+      setAmount({
+        euro: "",
+        euroWithoutFees: "",
+        dinar: "",
+        dinarWithoutFees: "",
+      });
+    }
   };
 
-  const onChangeDinar = (value: Number) => {
-    let fees = setFeeAmana(Number(value) / Number(exchange?.amount));
+  const onChangeDinar = (value: any) => {
     let isValid = isValidAmountTransferBARIDIMOB({
       walletAmount: wallet * Number(exchange?.amount),
       currentAmount: Number(value),
@@ -114,53 +135,67 @@ export default function MoneyOrder({ step, onGetForm, wallet }: Props) {
     });
 
     setError(isValid);
-    onGetForm({
-      ...request,
-      isValid: isValid?.error,
-      amount: Number(value) / Number(exchange?.amount) + Number(fees),
-      total_fee: Number(fees),
-    });
-    setRequest({
-      ...request,
-      isValid: isValid?.error,
-      amount: Number(value) / Number(exchange?.amount) + Number(fees),
-      total_fee: Number(fees),
-    });
-    setAmount({
-      euro: Number(value) / Number(exchange?.amount),
-      euroWithoutFees: Number(value) / Number(exchange?.amount) + Number(fees),
-      dinar: Number(value),
-      dinarWithoutFees: Number(value),
-    });
+    if (value) {
+      const exchanged = getEuroFromDZD({
+        amount: value,
+        fees: fees,
+        exchange: exchange?.amount || 1,
+      });
+
+      // let fees = setFeeAmana(Number(value) / Number(exchange?.amount));
+      onGetForm({
+        ...request,
+        isValid: isValid.error,
+        amount: exchanged.amountWithoutFees,
+        total_fee: exchanged.fees,
+      });
+      setRequest({
+        ...request,
+        isValid: isValid.error,
+        amount: exchanged.amountWithoutFees,
+        total_fee: exchanged.fees,
+      });
+
+      setAmount({
+        euro: exchanged.amountWithoutFees,
+        euroWithoutFees: exchanged.amount,
+        dinar: value,
+        dinarWithoutFees: value,
+      });
+    } else {
+      onGetForm({
+        ...request,
+        isValid: isValid?.error,
+        amount: 0,
+        total_fee: 0,
+      });
+      setRequest({
+        ...request,
+        isValid: isValid?.error,
+        amount: 0,
+        total_fee: 0,
+      });
+      setAmount({
+        euro: "",
+        euroWithoutFees: "",
+        dinar: "",
+        dinarWithoutFees: "",
+      });
+    }
+
     // onChangeForm({});
   };
 
   function getFeeAmana(amount: number) {
     for (let i = 0; i < fees.length; i++) {
       if (
-        amount >= fees[i].fees.min_price &&
-        amount <= fees[i].fees.max_price
+        amount >= fees[i].fees?.min_price &&
+        amount <= fees[i].fees?.max_price
       ) {
         if (fees[i].fees.type === "fix") {
-          return financial(Number(fees[i].fees.fee));
+          return Number(fees[i].fees.fee);
         } else {
-          return financial((amount * Number(fees[i].fees.fee)) / 100);
-        }
-      }
-    }
-  }
-  function setFeeAmana(amount: number) {
-    let reversed = fees || [];
-    for (let i = 0; i < reversed.length; i++) {
-      let euroWithFees = amount + Number(reversed[i].fees.fee);
-      if (
-        euroWithFees >= reversed[i].fees.min_price &&
-        euroWithFees <= reversed[i].fees.max_price
-      ) {
-        if (fees[i].fees.type === "fix") {
-          return financial(Number(reversed[i].fees.fee));
-        } else {
-          return financial((amount * Number(reversed[i].fees.fee)) / 100);
+          return (amount * Number(fees[i].fees.fee)) / 100;
         }
       }
     }
@@ -229,18 +264,22 @@ export default function MoneyOrder({ step, onGetForm, wallet }: Props) {
           <div className="mt-2 mb-2">
             <label className="font-bold text-black">You send</label>
             <CurrencyInput
-              value={Number(amount.euroWithoutFees).toFixed(2)}
+              value={amount.euroWithoutFees}
               prefix={"€ "}
+              placeholder="You send"
+              decimalsLimit={2}
               allowDecimals={true}
-              maxLength={10}
               allowNegativeValue={false}
+              groupSeparator=" "
+              decimalSeparator="."
+              maxLength={7}
               className={`rounded-2xl mt-3${
                 error.error ? " border-red focus:border-red border-2" : ""
               }  w-full h-12 text-bold text-pink-500`}
               onValueChange={(value: any) => {
                 // formattedValue = $2,223
                 // value ie, 2223
-                onChangeEuro(value || 1);
+                onChangeEuro(value);
               }}
             />
           </div>
@@ -272,7 +311,7 @@ export default function MoneyOrder({ step, onGetForm, wallet }: Props) {
                   </div>
                   {getCurrentcyFormat({
                     currency: "EUR",
-                    amount: Number(getFeeAmana(amount.euroWithoutFees || 1)),
+                    amount: Number(getFeeAmana(amount.euroWithoutFees || 0)),
                   })}
                   &nbsp; fees
                 </li>
@@ -345,22 +384,20 @@ export default function MoneyOrder({ step, onGetForm, wallet }: Props) {
           <div className="mt-2 mb-2">
             <label className="font-bold text-black">Receiver gets</label>
             <CurrencyInput
-              value={Number(amount.dinar).toFixed(2)}
+              value={amount.dinar}
               prefix={"DZD "}
-              maxLength={10}
+              decimalsLimit={2}
+              placeholder="Receiver gets"
               allowDecimals={true}
               allowNegativeValue={false}
+              groupSeparator=" "
+              decimalSeparator="."
+              maxLength={9}
               className={`rounded-2xl mt-3${
                 error.error ? " border-red focus:border-red border-2" : ""
               }  w-full h-12 text-bold text-pink-500`}
               onValueChange={(value: any) => {
-                // formattedValue = $2,223
-                // value ie, 2223
-                if (value) {
-                  onChangeDinar(value);
-                } else {
-                  onChangeEuro(1);
-                }
+                onChangeDinar(value);
               }}
             />
             {error.error ? (
