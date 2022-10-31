@@ -63,7 +63,6 @@ export function isValidAmountTransferCCP({
   method,
 }: IValidationAmountTransferCCP): IValidationAmountTransferCCPRETURN {
   if (method === CCP) {
-    console.log({ currentAmount, walletAmount, maxAmount, minAmount, method });
     if (
       Number(maxAmount) <= Number(currentAmount) &&
       walletAmount > currentAmount
@@ -125,7 +124,6 @@ export function isValidAmountTransferBARIDIMOB({
   maxAmount,
   minAmount,
 }: IValidationAmountTransferBARIDIMOB): IValidationAmountTransferBARIDIMOBRETURN {
-  console.log({ currentAmount, walletAmount, maxAmount, minAmount });
   if (
     Number(maxAmount) <= Number(currentAmount) &&
     walletAmount > currentAmount
