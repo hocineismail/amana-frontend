@@ -72,9 +72,10 @@ export default function MoneyOrder({ step, onGetForm, wallet }: Props) {
   });
   const onChangeEuro = (value: number) => {
     let amountWithFees = value - Number(getFeeAmana(value));
+    console.log(amountWithFees);
     let isValid = isValidAmountTransferBARIDIMOB({
       walletAmount: wallet * Number(exchange?.amount),
-      currentAmount: amountWithFees || 0 * Number(exchange?.amount),
+      currentAmount: amountWithFees * Number(exchange?.amount),
       minAmount: 1000,
       maxAmount:
         (200000 - Number(getFeeAmana(100000))) * Number(exchange?.amount),
@@ -146,19 +147,19 @@ export default function MoneyOrder({ step, onGetForm, wallet }: Props) {
       onGetForm({
         ...request,
         isValid: isValid.error,
-        amount: exchanged.amountWithoutFees,
+        amount: exchanged.totalAmount,
         total_fee: exchanged.fees,
       });
       setRequest({
         ...request,
         isValid: isValid.error,
-        amount: exchanged.amountWithoutFees,
+        amount: exchanged.totalAmount,
         total_fee: exchanged.fees,
       });
 
       setAmount({
-        euro: exchanged.amountWithoutFees,
-        euroWithoutFees: exchanged.amount,
+        euro: exchanged.amountAfterTax,
+        euroWithoutFees: exchanged.totalAmount,
         dinar: value,
         dinarWithoutFees: value,
       });

@@ -204,6 +204,7 @@ export default function Transfer({
   };
 
   const onSubmitCardLess = async (e: any) => {
+    console.log(e);
     setdisabled(validationCardLess({ data: e, step: Number(step) - 1 }));
     setdata(e);
     // setAmount(Number(e.amount));

@@ -83,7 +83,7 @@ export default function CCPPayement({ step, onGetForm, wallet }: Props) {
 
     let isValid = isValidAmountTransferCCP({
       walletAmount: wallet * Number(exchange?.amount),
-      currentAmount: amountWithFees || 0 * Number(exchange?.amount),
+      currentAmount: (amountWithFees || 0) * Number(exchange?.amount),
       minAmount: 1000,
       maxAmount: (2001 - Number(getFeeAmana(2001))) * Number(exchange?.amount),
       method: CCP,
@@ -149,7 +149,7 @@ export default function CCPPayement({ step, onGetForm, wallet }: Props) {
     // } else {
     let isValid = isValidAmountTransferCCP({
       walletAmount: wallet * Number(exchange?.amount),
-      currentAmount: Number(value) || 0,
+      currentAmount: Number(value),
       maxAmount: 2000 * Number(exchange?.amount),
       minAmount: 1000,
       method: CCP,
@@ -164,22 +164,23 @@ export default function CCPPayement({ step, onGetForm, wallet }: Props) {
       });
 
       // let fees = setFeeAmana(Number(value) / Number(exchange?.amount));
+      console.log(exchanged);
       onGetForm({
         ...request,
         isValid: isValid.error,
-        amount: exchanged.amountWithoutFees,
+        amount: exchanged.totalAmount,
         total_fee: exchanged.fees,
       });
       setRequest({
         ...request,
         isValid: isValid.error,
-        amount: exchanged.amountWithoutFees,
+        amount: exchanged.totalAmount,
         total_fee: exchanged.fees,
       });
 
       setAmount({
-        euro: exchanged.amountWithoutFees,
-        euroWithoutFees: exchanged.amount,
+        euro: exchanged.amountAfterTax,
+        euroWithoutFees: exchanged.totalAmount,
         dinar: value,
         dinarWithoutFees: value,
       });

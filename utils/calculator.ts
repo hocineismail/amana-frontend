@@ -27,32 +27,33 @@ export const getEuroFromDZD = ({ amount, fees, exchange }: IERUOFROMDINAR): any 
   for (let i = 0; i < fees.length; i++) {
     if (fees[i].fees.type === "fix") {
       
-      let euroWithFees = financial(amount +  Number(fees[i].fees.fee)) ;
+      let totalAmount = financial(amount +  Number(fees[i].fees.fee)) ;
       
       if (
-        euroWithFees >= Number(fees[i].fees.min_price) &&
-        euroWithFees <= Number(fees[i].fees.max_price)
+        totalAmount >= Number(fees[i].fees.min_price) &&
+        totalAmount <= Number(fees[i].fees.max_price)
       ) {
        
         return {
             fees:  Number(fees[i].fees.fee ),
-            amountWithoutFees: amount,
-            amount: euroWithFees 
+            totalAmount: totalAmount,
+            amountAfterTax: amount  
         }
       }
     } else {
       let restFees = 100 - Number(fees[i].fees.fee);
-      let euroWithFees = financial( amount + (Number(fees[i].fees.fee) * amount) / restFees)
+      let totalAmount = financial( amount + (Number(fees[i].fees.fee) * amount) / restFees)
       
       if (
-        euroWithFees >= Number(fees[i].fees.min_price) &&
-        euroWithFees <= Number(fees[i].fees.max_price)
+        totalAmount >= Number(fees[i].fees.min_price) &&
+        totalAmount <= Number(fees[i].fees.max_price)
       ) {
    
         return {
-            fees:  Number(fees[i].fees.fee) / 100 ,
-            amountWithoutFees: amount,
-            amount:  euroWithFees 
+            //fees:     Number(fees[i].fees.fee) / 100 ,
+            fees:  (totalAmount * Number(fees[i].fees.fee) / 100 ),
+            totalAmount: totalAmount,
+            amountAfterTax: amount   
         }
       }
     }

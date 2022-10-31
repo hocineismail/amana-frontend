@@ -92,7 +92,7 @@ export default function CardlessWithdrawal({ step, onGetForm, wallet }: Props) {
         exchange: Number(exchange?.amount),
       }));
 
-      onChangeDinar(1);
+      onChangeDinar(0);
     }
   }, [exchange, fees, setRequest]);
 
@@ -115,13 +115,13 @@ export default function CardlessWithdrawal({ step, onGetForm, wallet }: Props) {
     onGetForm({
       ...request,
       isValid: isValid.error,
-      amount: exchanged.amountWithoutFees,
+      amount: Number(exchanged.amount),
       total_fee: exchanged.fees,
     });
     setRequest({
       ...request,
       isValid: isValid.error,
-      amount: exchanged.amountWithoutFees,
+      amount: Number(exchanged.amount),
       total_fee: exchanged.fees,
     });
 
@@ -152,22 +152,7 @@ export default function CardlessWithdrawal({ step, onGetForm, wallet }: Props) {
       }
     }
   }
-  function setFeeAmana(amount: number) {
-    let reversed = fees || [];
-    for (let i = 0; i < reversed.length; i++) {
-      let euroWithFees = amount + Number(reversed[i].fees.fee);
-      if (
-        euroWithFees >= reversed[i].fees.min_price &&
-        euroWithFees <= reversed[i].fees.max_price
-      ) {
-        if (fees[i].fees.type === "fix") {
-          return Number(reversed[i].fees.fee);
-        } else {
-          return (amount * Number(reversed[i].fees.fee)) / 100;
-        }
-      }
-    }
-  }
+
   const onChangeForm = (e: any) => {
     setErrorsFrom({
       ...errorsForm,
@@ -340,16 +325,18 @@ export default function CardlessWithdrawal({ step, onGetForm, wallet }: Props) {
             ></div>
           </div>
           <div className="mt-2 mb-4 ">
-            <label htmlFor="country">Receiver gets</label>
+            <label htmlFor="amount">Receiver gets</label>
             <select
-              name="country"
-              id="country"
+              name="amount"
+              id="amount"
               className="rounded-2xl mt-3   w-full h-12 text-bold text-pink-500"
-              value={amount.dinar / AMOUNT_SELECTED}
               onChange={(e) => {
                 onChangeDinar((e.target as any).value);
               }}
             >
+              <option value="" disabled selected>
+                Select your option
+              </option>
               {optionLength?.map((item: any, index: number) => {
                 return (
                   <option

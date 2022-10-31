@@ -16,7 +16,7 @@ export function isValidAmount({
   minAmount,
 }: IValidationAmount) {
   if (type === CHARGE) {
-    if (Number(maxAmount) < Number(currentAmount)) {
+    if (Number(maxAmount) < Number(currentAmount || 0)) {
       return {
         error: true,
         msg: `The maximum amount for deposits is ${getCurrentcyFormat({
@@ -24,7 +24,7 @@ export function isValidAmount({
           currency: "EUR",
         })}`,
       };
-    } else if (Number(minAmount) > Number(currentAmount)) {
+    } else if (Number(minAmount) > Number(currentAmount || 0)) {
       return {
         error: true,
         msg: `The minimum amount for deposits is ${getCurrentcyFormat({
@@ -64,7 +64,7 @@ export function isValidAmountTransferCCP({
 }: IValidationAmountTransferCCP): IValidationAmountTransferCCPRETURN {
   if (method === CCP) {
     if (
-      Number(maxAmount) <= Number(currentAmount) &&
+      Number(maxAmount) <= Number(currentAmount || 0) &&
       walletAmount > currentAmount
     ) {
       return {
@@ -74,7 +74,7 @@ export function isValidAmountTransferCCP({
           currency: "DZD",
         })}`,
       };
-    } else if (Number(minAmount) > Number(currentAmount)) {
+    } else if (Number(minAmount) > Number(currentAmount || 0)) {
       return {
         error: true,
         msg: `The minimum Transfer is ${getCurrentcyFormat({
@@ -82,7 +82,7 @@ export function isValidAmountTransferCCP({
           currency: "DZD",
         })}`,
       };
-    } else if (Number(walletAmount) < Number(currentAmount)) {
+    } else if (Number(walletAmount) < Number(currentAmount || 0)) {
       return {
         error: true,
         msg: `You don't have enough funds in your wallet`,
@@ -125,7 +125,7 @@ export function isValidAmountTransferBARIDIMOB({
   minAmount,
 }: IValidationAmountTransferBARIDIMOB): IValidationAmountTransferBARIDIMOBRETURN {
   if (
-    Number(maxAmount) <= Number(currentAmount) &&
+    Number(maxAmount) <= Number(currentAmount || 0) &&
     walletAmount > currentAmount
   ) {
     return {
@@ -135,7 +135,7 @@ export function isValidAmountTransferBARIDIMOB({
         amount: maxAmount,
       })} `,
     };
-  } else if (Number(minAmount) > Number(currentAmount)) {
+  } else if (Number(minAmount) > Number(currentAmount || 0)) {
     return {
       error: true,
       msg: `The minimum Transfer is   ${getCurrentcyFormat({
@@ -143,7 +143,7 @@ export function isValidAmountTransferBARIDIMOB({
         amount: minAmount,
       })}  `,
     };
-  } else if (Number(walletAmount) < Number(currentAmount)) {
+  } else if (Number(walletAmount) < Number(currentAmount || 0)) {
     return {
       error: true,
       msg: `You don't have enough funds in your wallet`,
