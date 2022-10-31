@@ -79,11 +79,10 @@ export default function CCPPayement({ step, onGetForm, wallet }: Props) {
 
   const onChangeEuro = (value: any) => {
     // value = value ? parseFloat(value).toFixed(2) : value;
-
+    let amountWithFees = value - Number(getFeeAmana(value));
     let isValid = isValidAmountTransferCCP({
       walletAmount: wallet * Number(exchange?.amount),
-      currentAmount:
-        (value - Number(getFeeAmana(value))) * Number(exchange?.amount),
+      currentAmount: amountWithFees * Number(exchange?.amount),
       minAmount: 1000,
       maxAmount: (2001 - Number(getFeeAmana(2001))) * Number(exchange?.amount),
       method: CCP,

@@ -125,12 +125,11 @@ export function isValidAmountTransferBARIDIMOB({
   maxAmount,
   minAmount,
 }: IValidationAmountTransferBARIDIMOB): IValidationAmountTransferBARIDIMOBRETURN {
+  console.log({ currentAmount, walletAmount, maxAmount, minAmount });
   if (
     Number(maxAmount) <= Number(currentAmount) &&
     walletAmount > currentAmount
   ) {
-    console.log({ currentAmount, walletAmount, maxAmount, minAmount });
-
     return {
       error: true,
       msg: `The maximum Transfer is  ${getCurrentcyFormat({

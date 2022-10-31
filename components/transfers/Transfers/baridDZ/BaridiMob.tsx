@@ -72,14 +72,15 @@ export default function BaridiMob({ step, onGetForm, wallet }: Props) {
 
   const onChangeEuro = (value: any) => {
     // let amountValue = value | 0;
+    let amountWithFees = value - Number(getFeeAmana(value));
     let isValid = isValidAmountTransferBARIDIMOB({
       walletAmount: wallet * Number(exchange?.amount),
-      currentAmount:
-        (value - Number(getFeeAmana(value))) * Number(exchange?.amount),
+      currentAmount: amountWithFees * Number(exchange?.amount),
       minAmount: 1000,
       maxAmount:
         (100000 - Number(getFeeAmana(100000))) * Number(exchange?.amount),
     });
+
     setError(isValid);
     if (value) {
       onGetForm({
@@ -131,10 +132,11 @@ export default function BaridiMob({ step, onGetForm, wallet }: Props) {
     // } else {
     let isValid = isValidAmountTransferBARIDIMOB({
       walletAmount: wallet * Number(exchange?.amount),
-      currentAmount: Number(value),
+      currentAmount: value,
       maxAmount: 100000,
       minAmount: 1000,
     });
+
     setError(isValid);
     if (value) {
       const exchanged = getEuroFromDZD({
@@ -379,7 +381,7 @@ export default function BaridiMob({ step, onGetForm, wallet }: Props) {
             <CurrencyInput
               value={amount.dinar}
               prefix={"DZD "}
-              placeholder="You send"
+              placeholder="Receiver gets"
               decimalsLimit={2}
               allowDecimals={true}
               allowNegativeValue={false}
