@@ -502,7 +502,20 @@ export default function BaridiMob({ step, onGetForm, wallet }: Props) {
               onChange={onChangeForm}
               rows={3}
               cols={50}
+              maxLength={500}
+              onBlur={(e) => {
+                onChangeForm(e);
+                if (!validator.isLength(e.target.value, { max: 500 })) {
+                  setErrorsFrom({
+                    ...errorsForm,
+                    [e.target.name]: "You have to write more",
+                  });
+                }
+              }}
             ></textarea>
+            <span className="text-xs text-[#010101]">
+              Characters left: {500 - request.details.length}
+            </span>
           </div>
         </>
       )}
