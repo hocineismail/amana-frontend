@@ -97,10 +97,6 @@ export default function Transfer({
       dispatch(onGetFees());
     }
   }, [dispatch, firstFetchFees]);
-  React.useEffect(() => {
-    if (method === "Baridi Mob" || method === "Retrait Sans Carte")
-      setdisabled(false);
-  }, [method]);
 
   const onSubmitCCPPayment = async (e: any) => {
     setdata(e);
@@ -133,6 +129,7 @@ export default function Transfer({
   };
   const onSubmitBaridiMob = async (e: any) => {
     setdata(e);
+
     setdisabled(
       e.isValid ||
         validationBaridimob({
@@ -204,8 +201,9 @@ export default function Transfer({
   };
 
   const onSubmitCardLess = async (e: any) => {
-    console.log(e);
-    setdisabled(validationCardLess({ data: e, step: Number(step) - 1 }));
+    setdisabled(
+      e.isValid || validationCardLess({ data: e, step: Number(step) - 1 })
+    );
     setdata(e);
     // setAmount(Number(e.amount));
     setReqestMoney({

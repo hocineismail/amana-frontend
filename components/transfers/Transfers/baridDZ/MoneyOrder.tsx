@@ -72,7 +72,7 @@ export default function MoneyOrder({ step, onGetForm, wallet }: Props) {
   });
   const onChangeEuro = (value: number) => {
     let amountWithFees = value - Number(getFeeAmana(value));
-    console.log(amountWithFees);
+
     let isValid = isValidAmountTransferBARIDIMOB({
       walletAmount: wallet * Number(exchange?.amount),
       currentAmount: amountWithFees * Number(exchange?.amount),
@@ -156,7 +156,6 @@ export default function MoneyOrder({ step, onGetForm, wallet }: Props) {
         amount: exchanged.totalAmount,
         total_fee: exchanged.fees,
       });
-
       setAmount({
         euro: exchanged.amountAfterTax,
         euroWithoutFees: exchanged.totalAmount,

@@ -164,7 +164,7 @@ export default function CCPPayement({ step, onGetForm, wallet }: Props) {
       });
 
       // let fees = setFeeAmana(Number(value) / Number(exchange?.amount));
-      console.log(exchanged);
+
       onGetForm({
         ...request,
         isValid: isValid.error,

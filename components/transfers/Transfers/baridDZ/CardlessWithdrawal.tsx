@@ -68,11 +68,15 @@ export default function CardlessWithdrawal({ step, onGetForm, wallet }: Props) {
       index++;
 
       selectOtion.push({
-        disabled: exchanged.amountWithoutFees > wallet,
+        disabled: exchanged.totalAmount > wallet,
       });
     }
     return selectOtion;
   }
+  const [error, setError] = React.useState<any>({
+    error: false,
+    msg: "",
+  });
   React.useEffect(() => {
     if (wallet) {
       setoptionLength(generateSelectOptions());
@@ -111,30 +115,26 @@ export default function CardlessWithdrawal({ step, onGetForm, wallet }: Props) {
       fees: fees,
       exchange: exchange?.amount || 1,
     });
+    setError(isValid);
 
     onGetForm({
       ...request,
       isValid: isValid.error,
-      amount: Number(exchanged.amount),
+      amount: exchanged.totalAmount,
       total_fee: exchanged.fees,
     });
     setRequest({
       ...request,
       isValid: isValid.error,
-      amount: Number(exchanged.amount),
+      amount: exchanged.totalAmount,
       total_fee: exchanged.fees,
     });
 
     setAmount({
-      euro: exchanged.amountWithoutFees,
-      euroWithoutFees: exchanged.amount,
+      euro: exchanged.amountAfterTax,
+      euroWithoutFees: exchanged.totalAmount,
       dinar: value,
       dinarWithoutFees: value,
-    });
-
-    onGetForm({
-      ...request,
-      amount: Number(value) / Number(exchange?.amount) + Number(fees),
     });
   };
 
@@ -254,7 +254,7 @@ export default function CardlessWithdrawal({ step, onGetForm, wallet }: Props) {
                   </div>
                   {getCurrentcyFormat({
                     currency: "EUR",
-                    amount: Number(getFeeAmana(amount.euroWithoutFees || 1)),
+                    amount: Number(getFeeAmana(amount.euroWithoutFees || 0)),
                   })}
                   &nbsp; fees
                 </li>
