@@ -64,8 +64,7 @@ export default function CardlessWithdrawal({ step, onGetForm, wallet }: Props) {
         fees: fees,
         exchange: exchange?.amount || 1,
       });
-      console.log(index);
-      console.log(exchanged);
+
       index++;
 
       selectOtion.push({

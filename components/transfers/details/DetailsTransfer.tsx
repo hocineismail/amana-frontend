@@ -7,7 +7,6 @@ type Props = {
 };
 
 export default function DetailsTransfer({ item }: Props) {
-  console.log(item);
   if (!item) return <></>;
 
   return (

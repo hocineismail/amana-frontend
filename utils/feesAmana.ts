@@ -18,7 +18,7 @@ export function getFeeAmana({amount, fees}: IFees) {
   }
 export  function setFeeAmana({amount, fees}: IFees) {
     let reversed = fees.reverse();
-    console.log(reversed);
+ 
     for (let i = 0; i < reversed.length; i++) {
       let euroWithFees = Number(amount) + Number(reversed[i].fees.fee);
       if (

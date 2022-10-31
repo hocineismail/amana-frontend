@@ -4,7 +4,7 @@ export function checkAvailablityTransaction (method: string, wallet: number, amo
      amountDz: number) {
  
  
-   console.log(`%c ${amountDz}`, "background: #222; color: #bada55")
+ 
     if (wallet < amountEuro) {
         return true
     }

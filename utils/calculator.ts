@@ -48,7 +48,7 @@ export const getEuroFromDZD = ({ amount, fees, exchange }: IERUOFROMDINAR): any 
         euroWithFees >= Number(fees[i].fees.min_price) &&
         euroWithFees <= Number(fees[i].fees.max_price)
       ) {
-        console.log(fees[i].fees.min_price + " < "+ euroWithFees + " < "+ fees[i].fees.max_price)
+   
         return {
             fees:  Number(fees[i].fees.fee) / 100 ,
             amountWithoutFees: amount,

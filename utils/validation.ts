@@ -235,8 +235,7 @@ export function validationCardLess({
   general,
 }: IValidationCCPpayment) {
   let isError = false;
-  console.log("data");
-  console.log(data);
+ 
   if (step === 1) {
     if (!validator.isLength(data?.firstname || "", { min: 3, max: 50 })) {
       isError = true;
@@ -355,9 +354,7 @@ export function validationBaridimob({
     var pattern = /^\d+$/;
     // const patternPhone = /[^\d]/;
     const numberConst = data?.target_baridiMob?.RIP.substring(0, 7);
-    console.log(data);
-
-    console.log(data?.relation?.toString());
+ 
     if (
       !pattern.test(data?.target_baridiMob?.RIP || "") ||
       !validator.isLength(data?.target_baridiMob?.RIP.toString() || "", {
