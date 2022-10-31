@@ -15,8 +15,8 @@ interface IMoney {
 }
 export default function Exchange() {
   const [Exchange, setExchange] = React.useState<IMoney | any>({
-    moneyEuro: 1,
-    moneyDinar: 1,
+    moneyEuro: 0,
+    moneyDinar: 0,
   });
 
   const { exchange } = useAppSelector(globalState);

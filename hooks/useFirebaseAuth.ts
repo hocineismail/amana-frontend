@@ -52,7 +52,7 @@ export default function useFirebaseAuth() {
     setcurrentUser(null);
     setAuthUser(null);
     setLoading(true);
-    localStorage.clear();
+    localStorage.removeItem("isAuth");
     location.reload();
 
   };
