@@ -75,7 +75,7 @@ export default function BaridiMob({ step, onGetForm, wallet }: Props) {
     let amountWithFees = value - Number(getFeeAmana(value));
     let isValid = isValidAmountTransferBARIDIMOB({
       walletAmount: wallet * Number(exchange?.amount),
-      currentAmount: amountWithFees || 0 * Number(exchange?.amount),
+      currentAmount: amountWithFees * Number(exchange?.amount),
       minAmount: 1000,
       maxAmount:
         (100000 - Number(getFeeAmana(100000))) * Number(exchange?.amount),
