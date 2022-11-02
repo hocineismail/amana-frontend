@@ -97,10 +97,12 @@ export default function MoneyOrder({ step, onGetForm, wallet }: Props) {
       setAmount({
         euro: value - Number(getFeeAmana(value)),
         euroWithoutFees: value,
-        dinar: Number(
-          (Number(value) - Number(getFeeAmana(value))) *
-            Number(exchange?.amount)
-        ),
+        dinar: parseFloat(
+          Number(
+            (Number(value) - Number(getFeeAmana(value))) *
+              Number(exchange?.amount)
+          ).toString()
+        ).toFixed(2),
         dinarWithoutFees: Number(Number(value) * Number(exchange?.amount)),
       });
     } else {

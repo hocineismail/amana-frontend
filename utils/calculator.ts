@@ -35,9 +35,9 @@ export const getEuroFromDZD = ({ amount, fees, exchange }: IERUOFROMDINAR): any 
       ) {
        
         return {
-            fees:  Number(fees[i].fees.fee ),
-            totalAmount: totalAmount,
-            amountAfterTax: amount  
+            fees: parseFloat((Number(fees[i].fees.fee).toString())).toFixed(2),  
+            totalAmount:parseFloat((totalAmount.toString())).toFixed(2),       
+            amountAfterTax: parseFloat((amount.toString())).toFixed(2)  
         }
       }
     } else {
@@ -51,9 +51,9 @@ export const getEuroFromDZD = ({ amount, fees, exchange }: IERUOFROMDINAR): any 
    
         return {
             //fees:     Number(fees[i].fees.fee) / 100 ,
-            fees:  (totalAmount * Number(fees[i].fees.fee) / 100 ),
-            totalAmount: totalAmount,
-            amountAfterTax: amount   
+            fees: parseFloat(( (totalAmount * Number(fees[i].fees.fee) / 100 ).toString())).toFixed(2),     
+            totalAmount:  parseFloat((totalAmount.toString())).toFixed(2),
+            amountAfterTax: parseFloat((amount.toString())).toFixed(2)   
         }
       }
     }

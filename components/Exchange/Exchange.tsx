@@ -37,7 +37,9 @@ export default function Exchange() {
   const handleChangeDinnar = (value: any) => {
     if (value) {
       setExchange({
-        moneyEuro: value / Number(exchange?.amount) || 1,
+        moneyEuro: parseFloat(
+          (value / Number(exchange?.amount || 1)).toFixed(2)
+        ),
         moneyDinar: value,
       });
     } else {
@@ -51,7 +53,7 @@ export default function Exchange() {
     if (value >= 0) {
       setExchange({
         moneyEuro: value,
-        moneyDinar: value * Number(exchange?.amount),
+        moneyDinar: parseFloat((value * Number(exchange?.amount)).toFixed(2)),
       });
     } else {
       setExchange({
