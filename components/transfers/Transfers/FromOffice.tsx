@@ -45,18 +45,20 @@ export default function FromOffice({ step, onGetForm, wallet }: Props) {
     dinar: 1,
     dinarWithoutFees: 1,
   });
-  const { exchange, DZOffices, fees, firstFetchFees, firstFetchDZOffices } =
+  const { exchange, DZOffices, fees, firstFetchFees } =
     useAppSelector(globalState);
 
   const dispatch = useAppDispatch();
   React.useEffect(() => {
+    if (DZOffices.length === 0) {
+      dispatch(onGetOffices({ country: "Algeria" }));
+    }
+  }, []);
+  React.useEffect(() => {
     if (firstFetchFees) {
       dispatch(onGetFees());
     }
-    if (firstFetchDZOffices) {
-      dispatch(onGetOffices({ country: "Algeria" }));
-    }
-  }, [firstFetchFees, firstFetchDZOffices]);
+  }, [firstFetchFees]);
 
   React.useEffect(() => {
     if (exchange?.amount && !fees[0]?.preFees) {

@@ -113,7 +113,7 @@ export function onGetCountries() {
 
 export function onGetOffices({ country }: any) {
   return function (dispatch: any) {
-    dispatch(onBlockFetchEUOffice())
+ 
     let officeRef = collection(db, "office");
  
     let q = query(

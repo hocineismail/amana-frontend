@@ -92,13 +92,13 @@ export default function Charge({ onCloseModel }: Props) {
     banks,
   } = useAppSelector(globalState);
   React.useEffect(() => {
-    if (firstFetchCountries) {
+    if (countries.length === 0) {
       dispatch(onGetCountries());
     }
-    if (firstFetchEUOffices) {
+    if (EUOffices.length === 0) {
       dispatch(onGetOffices({ country: "Europ" }));
     }
-    if (firstFetchBanks) {
+    if (banks.length === 0) {
       dispatch(onGetBanks());
     }
   }, [dispatch, firstFetchCountries, firstFetchEUOffices, firstFetchBanks]);
