@@ -53,7 +53,7 @@ export default function CardlessWithdrawal({ step, onGetForm, wallet }: Props) {
     dinarWithoutFees: 1,
   });
   const [optionLength, setoptionLength] = React.useState<any[]>([]);
-  const { exchange, fees, firstFetchFees } = useAppSelector(globalState);
+  const { exchange, fees } = useAppSelector(globalState);
   const dispatch = useAppDispatch();
   function generateSelectOptions(): any[] {
     let index = 1;
@@ -84,10 +84,10 @@ export default function CardlessWithdrawal({ step, onGetForm, wallet }: Props) {
   }, [wallet, setoptionLength]);
 
   React.useEffect(() => {
-    if (firstFetchFees) {
+    if (fees.length === 0) {
       dispatch(onGetFees());
     }
-  }, [firstFetchFees]);
+  }, []);
 
   React.useEffect(() => {
     if (exchange?.amount && !fees[0]?.preFees) {

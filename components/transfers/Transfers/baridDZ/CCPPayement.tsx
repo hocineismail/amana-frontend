@@ -57,14 +57,14 @@ export default function CCPPayement({ step, onGetForm, wallet }: Props) {
     dinarWithoutFees: 1,
   });
   const [walletIsNotEnougth, setwalletIsNotEnougth] = React.useState(false);
-  const { exchange, fees, firstFetchFees } = useAppSelector(globalState);
+  const { exchange, fees } = useAppSelector(globalState);
   const dispatch = useAppDispatch();
 
   React.useEffect(() => {
-    if (firstFetchFees) {
+    if (fees.length === 0) {
       dispatch(onGetFees());
     }
-  }, [firstFetchFees]);
+  }, []);
 
   React.useEffect(() => {
     if (exchange?.amount && !fees[0]?.preFees) {

@@ -47,14 +47,14 @@ export default function BaridiMob({ step, onGetForm, wallet }: Props) {
   });
   // const { fees, loading } = useFees();
 
-  const { exchange, fees, firstFetchFees } = useAppSelector(globalState);
+  const { exchange, fees } = useAppSelector(globalState);
 
   const dispatch = useAppDispatch();
   React.useEffect(() => {
-    if (firstFetchFees) {
+    if (fees.length === 0) {
       dispatch(onGetFees());
     }
-  }, [firstFetchFees]);
+  }, []);
 
   React.useEffect(() => {
     if (exchange?.amount && !fees[0]?.preFees) {

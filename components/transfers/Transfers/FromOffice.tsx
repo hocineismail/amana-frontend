@@ -45,8 +45,7 @@ export default function FromOffice({ step, onGetForm, wallet }: Props) {
     dinar: 1,
     dinarWithoutFees: 1,
   });
-  const { exchange, DZOffices, fees, firstFetchFees } =
-    useAppSelector(globalState);
+  const { exchange, DZOffices, fees } = useAppSelector(globalState);
 
   const dispatch = useAppDispatch();
   React.useEffect(() => {
@@ -55,10 +54,10 @@ export default function FromOffice({ step, onGetForm, wallet }: Props) {
     }
   }, []);
   React.useEffect(() => {
-    if (firstFetchFees) {
+    if (fees.length === 0) {
       dispatch(onGetFees());
     }
-  }, [firstFetchFees]);
+  }, []);
 
   React.useEffect(() => {
     if (exchange?.amount && !fees[0]?.preFees) {
