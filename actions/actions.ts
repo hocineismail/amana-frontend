@@ -64,7 +64,7 @@ export function onGetExchange() {
 export function onGetAmountBlocked() {
   return function (dispatch: any) {
     let uid = localStorage.getItem("userId") || "";
-    console.log("jello");
+ 
     onSnapshot(doc(db, "users", uid.toString()), (doc) => {
       let user = doc.data();
       return dispatch(
@@ -82,7 +82,7 @@ export function onGetAmountAvailable() {
     let uid = localStorage.getItem("userId") || "";
     onSnapshot(doc(db, "wallets", uid.toString()), (doc) => {
       let wallet = doc.data();
-      console.log("test");
+ 
       return dispatch(
         onSetAmountAvailable({
           amountAvailable: Number(wallet?.amount),
@@ -101,10 +101,12 @@ export function onGetCountries() {
       const countries = querySnapshot.docs.map((doc) => ({
         country: doc.data(),
       }));
-
+      const sorted = countries.sort((a: any, b: any) =>
+      a.country.country.localeCompare(b.country.country)
+    );
       return dispatch(
         onSetCountries({
-          countries: countries,
+          countries: sorted,
         })
       );
     });
@@ -125,15 +127,23 @@ export function onGetOffices({ country }: any) {
         offices: doc.data(),
       }));
       if (country !== "Algeria") {
+      
+        const sorted = data.sort((a: any, b: any) =>
+        a.offices.country.localeCompare(b.offices.country)
+      );
+     
         return dispatch(
           onSetEUOffices({
-            EUOffices: data,
+            EUOffices: sorted,
           })
         );
       } else {
+        const sorted = [...data].sort((a: any, b: any) =>
+        a.offices.country.localeCompare(b.offices.country)
+      );
         return dispatch(
           onSetDZOffices({
-            DZOffices: data,
+            DZOffices: sorted,
           })
         );
       }
